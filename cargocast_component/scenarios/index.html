@@ -5,120 +5,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>CARGOCAST — Scenario Simulator (Detail View)</title>
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          "colors": {
-            "outline-variant": "#c6c9af",
-            "tertiary": "#5b5e67",
-            "outline": "#767963",
-            "inverse-surface": "#2e3132",
-            "background": "#f8f9fa",
-            "surface-container": "#edeeef",
-            "on-error-container": "#93000a",
-            "on-tertiary-container": "#5a5d66",
-            "on-background": "#191c1d",
-            "on-surface": "#191c1d",
-            "surface-container-lowest": "#ffffff",
-            "inverse-primary": "#b4d425",
-            "surface-container-high": "#e7e8e9",
-            "surface": "#f8f9fa",
-            "error": "#ba1a1a",
-            "on-primary-fixed-variant": "#3f4c00",
-            "on-primary-fixed": "#181e00",
-            "primary-container": "#c4e538",
-            "on-error": "#ffffff",
-            "on-tertiary-fixed-variant": "#43474f",
-            "on-primary-container": "#536400",
-            "surface-container-highest": "#e1e3e4",
-            "inverse-on-surface": "#f0f1f2",
-            "on-surface-variant": "#454935",
-            "primary": "#546500",
-            "secondary": "#5d5e63",
-            "on-secondary-fixed-variant": "#45474b",
-            "primary-fixed-dim": "#b4d425",
-            "on-primary": "#ffffff",
-            "tertiary-fixed-dim": "#c3c6d0",
-            "surface-bright": "#f8f9fa",
-            "on-secondary-fixed": "#1a1c20",
-            "on-secondary-container": "#636469",
-            "secondary-fixed-dim": "#c6c6cc",
-            "tertiary-container": "#d4d7e1",
-            "tertiary-fixed": "#dfe2ec",
-            "surface-container-low": "#f3f4f5",
-            "secondary-container": "#e2e2e8",
-            "on-secondary": "#ffffff",
-            "surface-tint": "#546500",
-            "surface-dim": "#d9dadb",
-            "on-tertiary-fixed": "#181c23",
-            "error-container": "#ffdad6",
-            "on-tertiary": "#ffffff",
-            "primary-fixed": "#cff143",
-            "secondary-fixed": "#e2e2e8",
-            "surface-variant": "#e1e3e4"
-          },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "spacing": {
-            "space-lg": "1.5rem",
-            "space-2xl": "3rem",
-            "header-height": "4.25rem",
-            "space-sm": "0.75rem",
-            "gutter-desktop": "1.5rem",
-            "space-xs": "0.5rem",
-            "space-md": "1rem",
-            "space-xl": "2rem",
-            "margin-desktop": "2rem",
-            "space-2xs": "0.25rem",
-            "space-3xl": "4rem"
-          },
-          "fontFamily": {
-            "headline-md": ["Space Grotesk"],
-            "display-xl": ["Space Grotesk"],
-            "data-metric-lg": ["Space Grotesk"],
-            "body-lg": ["Plus Jakarta Sans"],
-            "headline-lg": ["Space Grotesk"],
-            "data-metric-sm": ["JetBrains Mono"],
-            "display-xl-mobile": ["Space Grotesk"],
-            "headline-sm": ["Space Grotesk"],
-            "label-mono-caps": ["JetBrains Mono"],
-            "headline-lg-mobile": ["Space Grotesk"],
-            "body-md": ["Plus Jakarta Sans"],
-            "body-sm": ["Plus Jakarta Sans"]
-          },
-          "fontSize": {
-            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-            "display-xl": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
-            "data-metric-lg": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
-            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
-            "headline-lg": ["36px", { "lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-            "data-metric-sm": ["18px", { "lineHeight": "22px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-            "display-xl-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-            "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
-            "label-mono-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "600" }],
-            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
-            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
-            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }]
-          }
-        },
-      },
-    }
-  </script>
 <style>
     .hairline-grid {
       background-size: 32px 32px;
@@ -178,6 +66,183 @@
       border: 1px solid #767963;
     }
   </style>
+<style id="cargocast-self-contained-css">
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#0f1115}
+button,input{font:inherit}
+button{cursor:pointer}
+canvas{display:block;width:100%;height:100%}
+.material-symbols-outlined{display:inline-block;vertical-align:middle;font-size:1.1em;line-height:1}
+.absolute{position:absolute}
+.active\:translate-x-0\.5:active{transform:translateX(0.125rem)}
+.active\:translate-y-0\.5:active{transform:translateY(0.125rem)}
+.bg-background{background-color:#ffffff}
+.bg-inverse-surface{background-color:#0f1115}
+.bg-on-surface{background-color:#0f1115}
+.bg-primary-container{background-color:#c4e538}
+.bg-surface-container-high{background-color:#e7e8e9}
+.bg-surface-container-highest{background-color:#e1e3e4}
+.bg-surface-container-highest\/20{background-color:color-mix(in srgb,#e1e3e4 20.0%,transparent)}
+.bg-surface-container-low{background-color:#f3f4f5}
+.bg-surface-container-lowest{background-color:#ffffff}
+.border{border-width:1px;border-style:solid}
+.border-2{border-width:2px;border-style:solid}
+.border-b{border-bottom-width:1px;border-bottom-style:solid}
+.border-b-2{border-bottom-width:2px;border-bottom-style:solid}
+.border-dashed{border-style:dashed}
+.border-l{border-left-width:1px;border-left-style:solid}
+.border-on-surface{border-color:#0f1115}
+.border-on-surface\/20{border-color:#0f1115}
+.border-outline{border-color:#767963}
+.border-outline\/30{border-color:#767963}
+.border-outline\/50{border-color:#767963}
+.border-outline\/60{border-color:#767963}
+.border-primary-container{border-color:#c4e538}
+.border-primary-container\/40{border-color:#c4e538}
+.border-surface-container-high{border-color:#e7e8e9}
+.border-t{border-top-width:1px;border-top-style:solid}
+.flex{display:flex}
+.flex-col{flex-direction:column}
+.flex-wrap{flex-wrap:wrap}
+.font-body-md{font-family:Plus Jakarta Sans, sans-serif}
+.font-body-sm{font-family:Plus Jakarta Sans, sans-serif}
+.font-bold{font-weight:700}
+.font-data-metric-sm{font-family:JetBrains Mono, monospace}
+.font-headline-lg{font-family:Space Grotesk, sans-serif}
+.font-headline-md{font-family:Space Grotesk, sans-serif}
+.font-headline-sm{font-family:Space Grotesk, sans-serif}
+.font-label-mono-caps{font-family:JetBrains Mono, monospace}
+.font-semibold{font-weight:600}
+.gap-1{gap:0.25rem}
+.gap-1\.5{gap:0.375rem}
+.gap-2{gap:0.5rem}
+.gap-3{gap:0.75rem}
+.gap-4{gap:1rem}
+.gap-6{gap:1.5rem}
+.gap-gutter-desktop{gap:1.5rem}
+.grid{display:grid}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.h-0\.5{height:0.125rem}
+.h-1{height:0.25rem}
+.h-1\.5{height:0.375rem}
+.h-10{height:10}
+.h-2{height:0.5rem}
+.h-6{height:1.5rem}
+.h-\[360px\]{height:360px}
+.h-header-height{height:4.25rem}
+.hidden{display:none}
+.hover\:bg-inverse-primary:hover{background-color:#b4d425}
+.hover\:bg-on-surface:hover{background-color:#0f1115}
+.hover\:bg-surface-container-highest:hover{background-color:#e1e3e4}
+.hover\:border-2:hover{border-width:2px;border-style:solid}
+.hover\:shadow-\[3px_3px_0px_\#0f1115\]:hover{box-shadow:3px 3px 0px #0f1115}
+.hover\:text-on-surface:hover{color:#0f1115}
+.hover\:text-primary-container:hover{color:#c4e538}
+.hover\:text-surface-container-lowest:hover{color:#ffffff}
+.inline-block{display:inline-block}
+.inline-flex{display:inline-flex}
+.items-center{align-items:center}
+.items-start{align-items:flex-start}
+.justify-between{justify-content:space-between}
+.justify-center{justify-content:center}
+.leading-none{line-height:1}
+@media (min-width:1024px){.lg\:col-span-5{grid-column:span 5 / span 5}}
+@media (min-width:1024px){.lg\:col-span-7{grid-column:span 7 / span 7}}
+@media (min-width:1024px){.lg\:flex{display:flex}}
+@media (min-width:1024px){.lg\:flex-row{flex-direction:row}}
+@media (min-width:1024px){.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}}
+@media (min-width:1024px){.lg\:items-end{align-items:flex-end}}
+.max-w-2xl{max-width:3rem}
+.max-w-\[1600px\]{max-width:1600px}
+.max-w-full{max-width:100%}
+.mb-8{margin-bottom:2rem}
+@media (min-width:768px){.md\:flex{display:flex}}
+@media (min-width:768px){.md\:flex-row{flex-direction:row}}
+@media (min-width:768px){.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:768px){.md\:items-center{align-items:center}}
+@media (min-width:768px){.md\:p-8{padding:2rem}}
+@media (min-width:768px){.md\:px-margin-desktop{padding-left:2rem;padding-right:2rem}}
+.min-h-screen{min-height:100vh}
+.ml-2{margin-left:0.5rem}
+.ml-4{margin-left:1rem}
+.mt-2{margin-top:0.5rem}
+.mt-3{margin-top:0.75rem}
+.mt-4{margin-top:1rem}
+.mt-6{margin-top:1.5rem}
+.mt-8{margin-top:2rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+.p-1{padding:0.25rem}
+.p-3{padding:0.75rem}
+.p-4{padding:1rem}
+.p-5{padding:1.25rem}
+.p-6{padding:1.5rem}
+.pb-1{padding-bottom:0.25rem}
+.pb-4{padding-bottom:1rem}
+.pb-6{padding-bottom:1.5rem}
+.pl-3{padding-left:0.75rem}
+.pl-4{padding-left:1rem}
+.pt-2{padding-top:0.5rem}
+.pt-3{padding-top:0.75rem}
+.pt-4{padding-top:1rem}
+.px-1{padding-left:0.25rem;padding-right:0.25rem}
+.px-2{padding-left:0.5rem;padding-right:0.5rem}
+.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}
+.px-3{padding-left:0.75rem;padding-right:0.75rem}
+.px-4{padding-left:1rem;padding-right:1rem}
+.px-margin-desktop{padding-left:2rem;padding-right:2rem}
+.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}
+.py-1{padding-top:0.25rem;padding-bottom:0.25rem}
+.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}
+.py-2{padding-top:0.5rem;padding-bottom:0.5rem}
+.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}
+.py-8{padding-top:2rem;padding-bottom:2rem}
+.relative{position:relative}
+.right-1{right:0.25rem}
+.rounded-full{border-radius:9999px}
+.select-none{user-select:none}
+.shadow-\[3px_3px_0px_\#000000\]{box-shadow:3px 3px 0px #000000}
+.shadow-\[3px_3px_0px_\#0f1115\]{box-shadow:3px 3px 0px #0f1115}
+@media (min-width:640px){.sm\:flex{display:flex}}
+.space-y-6{margin-top:0}
+.sticky{position:sticky}
+.text-\[10px\]{font-size:10px}
+.text-\[11px\]{font-size:11px}
+.text-body-md{font-size:14px;line-height:20px}
+.text-body-sm{font-size:12px;line-height:16px}
+.text-data-metric-sm{font-size:18px;line-height:22px}
+.text-headline-lg{font-size:36px;line-height:42px}
+.text-headline-md{font-size:24px;line-height:30px}
+.text-headline-sm{font-size:18px;line-height:24px}
+.text-label-mono-caps{font-size:11px;line-height:14px}
+.text-lg{font-size:1.125rem}
+.text-on-background{color:#0f1115}
+.text-on-primary-fixed-variant{color:#3f4c00}
+.text-on-surface{color:#0f1115}
+.text-primary{color:#546500}
+.text-primary-container{color:#c4e538}
+.text-secondary-fixed-dim{color:#c6c6cc}
+.text-sm{font-size:.875rem}
+.text-surface-container-highest{color:#e1e3e4}
+.text-surface-container-lowest{color:#ffffff}
+.text-tertiary{color:#5b5e67}
+.text-xl{font-size:1.25rem}
+.text-xs{font-size:.75rem}
+.top-0{top:0}
+.top-1{top:0.25rem}
+.tracking-tight{letter-spacing:-.025em}
+.tracking-wider{letter-spacing:.05em}
+.transition-all{transition:all .15s ease}
+.transition-colors{transition:color,background-color,border-color .15s ease}
+.uppercase{text-transform:uppercase}
+.w-1\.5{width:0.375rem}
+.w-10{width:10}
+.w-12{width:3rem}
+.w-2{width:0.5rem}
+.w-4{width:1rem}
+.w-full{width:100%}
+.z-50{z-index:50}
+@media(max-width:767px){.md\:flex-row{flex-direction:column}.md\:grid-cols-3{grid-template-columns:1fr}.lg\:grid-cols-12{grid-template-columns:1fr}.lg\:col-span-4,.lg\:col-span-8{grid-column:auto}.px-margin-desktop{padding-left:1rem;padding-right:1rem}.max-w-\[1600px\]{max-width:100%}}
+</style>
 </head>
 <body class="bg-background text-on-background min-h-screen hairline-grid selection:bg-primary-container selection:text-on-primary-fixed">
 <!-- TOP APP BAR (Shared Component JSON Blueprint & Conflict Rules applied) -->
@@ -568,59 +633,16 @@
 </div>
 </main>
 <script>
-(function () {
-  if (window.Streamlit) return;
 
-  const Streamlit = {
-    RENDER_EVENT: "streamlit:render",
-    events: new EventTarget(),
-    _readySent: false,
-    _listenerRegistered: false,
-
-    setComponentReady: function () {
-      if (!Streamlit._listenerRegistered) {
-        window.addEventListener("message", function (event) {
-          const data = event.data;
-          if (!data || data.type !== Streamlit.RENDER_EVENT) return;
-          Streamlit.events.dispatchEvent(
-            new CustomEvent(Streamlit.RENDER_EVENT, { detail: data })
-          );
-        });
-        Streamlit._listenerRegistered = true;
-      }
-
-      if (!Streamlit._readySent) {
-        window.parent.postMessage(
-          { isStreamlitMessage: true, type: "streamlit:componentReady", apiVersion: 1 },
-          "*"
-        );
-        Streamlit._readySent = true;
-      }
-    },
-
-    setFrameHeight: function (height) {
-      if (height === undefined) height = document.body.scrollHeight;
-      window.parent.postMessage(
-        { isStreamlitMessage: true, type: "streamlit:setFrameHeight", height: height },
-        "*"
-      );
-    },
-
-    setComponentValue: function (value) {
-      window.parent.postMessage(
-        { isStreamlitMessage: true, type: "streamlit:setComponentValue", value: value, dataType: "json" },
-        "*"
-      );
-    }
-  };
-
-  window.Streamlit = Streamlit;
+const Streamlit=(function(){
+ const api={}; api.RENDER_EVENT="streamlit:render"; api.events=new EventTarget();
+ api.setComponentReady=function(){window.addEventListener("message",function(e){if(e.data&&e.data.type===api.RENDER_EVENT){const d=e.data;api.events.dispatchEvent(new CustomEvent(api.RENDER_EVENT,{detail:{args:d.args||{},disabled:!!d.disabled,theme:d.theme}}));}});window.parent.postMessage({isStreamlitMessage:true,type:"streamlit:componentReady",apiVersion:1},"*");};
+ api.setFrameHeight=function(h){if(h==null)h=document.body.scrollHeight;window.parent.postMessage({isStreamlitMessage:true,type:"streamlit:setFrameHeight",height:h},"*");};
+ api.setComponentValue=function(v){window.parent.postMessage({isStreamlitMessage:true,type:"streamlit:setComponentValue",value:v,dataType:"json"},"*");};
+ api.events.addEventListener=function(type,cb){EventTarget.prototype.addEventListener.call(api.events,type,cb);}; return api;
 })();
-</script>
-<script>
-
-const {Streamlit}=window; let scenarioChart; function fmtINR(v){return "₹"+Number(v).toLocaleString("en-IN",{maximumFractionDigits:0});}
-function render(a){const f=a.result;const ctx=document.getElementById("scenarioChart").getContext("2d");const data={labels:f.base_forecast.dates,datasets:[{label:"Base Case (No Shocks)",data:f.base_forecast.forecast,borderColor:"#191C1D",borderDash:[6,4],borderWidth:2.5,pointRadius:0,fill:false,tension:.3},{label:"Shocked Case (Active)",data:f.scenario_forecast.forecast,borderColor:"#C4E538",borderWidth:3,pointRadius:0,fill:false,tension:.3}]};const options={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:"#0f1115"}},scales:{x:{grid:{display:false},ticks:{color:"#767963",font:{family:"JetBrains Mono",size:10},maxTicksLimit:8}},y:{grid:{color:"#e1e3e4",borderDash:[3,3]},ticks:{color:"#767963",font:{family:"JetBrains Mono",size:10}}}}};if(scenarioChart){scenarioChart.data=data;scenarioChart.update()}else scenarioChart=new Chart(ctx,{type:"line",data,options});const s=f.savings,r=f.recommendation,positive=s.savings_usd>=0;document.getElementById("sc-impact-summary").textContent=positive?`Model Strategy (${r.charter_type} — ${r.timing}) saves an estimated ${fmtINR(s.savings_inr)} (${s.savings_pct}%) vs. naive baseline under this scenario.`:`This scenario erodes ${fmtINR(Math.abs(s.savings_inr))} of value vs. naive baseline — consider adjusting charter timing.`;const b=document.getElementById("sc-risk-badge");if(r.disruption_score>.5||Math.abs(a.values.fuel)>25||a.values.delay>10){b.textContent="HIGH RISK TOLERANCE EXCEEDED";b.className="px-2.5 py-1 bg-[#ba1a1a] text-surface-container-lowest font-label-mono-caps text-label-mono-caps"}else{b.textContent="WITHIN NORMAL RISK BAND";b.className="px-2.5 py-1 bg-on-surface text-surface-container-lowest font-label-mono-caps text-label-mono-caps"}}
+ function drawScenarioChart(a){const c=document.getElementById("scenarioChart");if(!c)return;const ctx=c.getContext("2d"),A=a.result.base_forecast.forecast,B=a.result.scenario_forecast.forecast,w=c.width=c.clientWidth||900,h=c.height=c.clientHeight||340,pad=34,all=[...A,...B],min=Math.min(...all),max=Math.max(...all),X=i=>pad+(w-pad*2)*(i/Math.max(1,A.length-1)),Y=v=>h-pad-(h-pad*2)*((v-min)/Math.max(1,max-min));ctx.clearRect(0,0,w,h);ctx.strokeStyle="#e1e3e4";ctx.lineWidth=1;for(let i=0;i<5;i++){let y=pad+i*(h-pad*2)/4;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(w-pad,y);ctx.stroke();}[[A,"#191c1d"],[B,"#c4e538"]].forEach(([arr,col],j)=>{ctx.beginPath();arr.forEach((v,i)=>{let x=X(i),y=Y(v);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.strokeStyle=col;ctx.lineWidth=j?3:2.5;ctx.setLineDash(j?[ ]:[6,4]);ctx.stroke();});ctx.setLineDash([]);}
+function render(a){drawScenarioChart(a);const f=a.result,s=f.savings,r=f.recommendation,positive=s.savings_usd>=0;document.getElementById("sc-impact-summary").textContent=positive?`Model Strategy (${r.charter_type} — ${r.timing}) saves an estimated ${fmtINR(s.savings_inr)} (${s.savings_pct}%) vs. naive baseline under this scenario.`:`This scenario erodes ${fmtINR(Math.abs(s.savings_inr))} of value vs. naive baseline — consider adjusting charter timing.`;const b=document.getElementById("sc-risk-badge");if(r.disruption_score>.5||Math.abs(a.values.fuel)>25||a.values.delay>10){b.textContent="HIGH RISK TOLERANCE EXCEEDED";b.className="px-2.5 py-1 bg-[#ba1a1a] text-surface-container-lowest font-label-mono-caps text-label-mono-caps"}else{b.textContent="WITHIN NORMAL RISK BAND";b.className="px-2.5 py-1 bg-on-surface text-surface-container-lowest font-label-mono-caps text-label-mono-caps"}}
 function emit(){const fuel=Number(document.getElementById("sc-fuel-slider").value),delay=Number(document.getElementById("sc-delay-slider").value),demand=Number(document.getElementById("sc-demand-slider").value);document.getElementById("sc-fuel-value").textContent=(fuel>=0?"+":"")+fuel.toFixed(1)+"%";document.getElementById("sc-delay-value").textContent=delay+" Days";document.getElementById("sc-demand-value").textContent=(demand>=0?"+":"")+demand.toFixed(1)+"%";clearTimeout(window.__t);window.__t=setTimeout(()=>Streamlit.setComponentValue({fuel,delay,demand}),300)}
 function setPreset(name){const p={cyclone:{fuel:5,delay:14,demand:-8},fuel:{fuel:35,delay:2,demand:0},demand:{fuel:5,delay:0,demand:20}}[name];if(!p)return;for(const [id,v] of [["sc-fuel-slider",p.fuel],["sc-delay-slider",p.delay],["sc-demand-slider",p.demand]])document.getElementById(id).value=v;emit()}
 window.loadPreset=setPreset; window.runSimulation=emit;
@@ -630,4 +652,3 @@ const presets={cyclone:"cyclone",fuel:"fuel",demand:"demand"}; for(const k in pr
 const reset=document.getElementById("reset-params");if(reset)reset.addEventListener("click",()=>{for(const [id,v] of [["sc-fuel-slider",0],["sc-delay-slider",0],["sc-demand-slider",0]])document.getElementById(id).value=v;emit()});const run=document.getElementById("run-simulation-btn");if(run)run.addEventListener("click",emit);Streamlit.setFrameHeight(1250);Streamlit.setComponentReady();
 
 </script>
-</body></html>
