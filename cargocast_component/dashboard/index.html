@@ -605,6 +605,39 @@ canvas{display:block;width:100%;height:100%}
 </footer>
 </main>
 <script>
+(function () {
+  if (window.Streamlit) return;
+  const Streamlit = {
+    RENDER_EVENT: "streamlit:render",
+    events: new EventTarget(),
+    _readySent: false,
+    _listenerRegistered: false,
+    setComponentReady: function () {
+      if (!Streamlit._listenerRegistered) {
+        window.addEventListener("message", function (event) {
+          const data = event.data;
+          if (!data || data.type !== Streamlit.RENDER_EVENT) return;
+          Streamlit.events.dispatchEvent(new CustomEvent(Streamlit.RENDER_EVENT, { detail: data }));
+        });
+        Streamlit._listenerRegistered = true;
+      }
+      if (!Streamlit._readySent) {
+        window.parent.postMessage({ isStreamlitMessage: true, type: "streamlit:componentReady", apiVersion: 1 }, "*");
+        Streamlit._readySent = true;
+      }
+    },
+    setFrameHeight: function (height) {
+      if (height === undefined) height = document.body.scrollHeight;
+      window.parent.postMessage({ isStreamlitMessage: true, type: "streamlit:setFrameHeight", height: height }, "*");
+    },
+    setComponentValue: function (value) {
+      window.parent.postMessage({ isStreamlitMessage: true, type: "streamlit:setComponentValue", value: value, dataType: "json" }, "*");
+    }
+  };
+  window.Streamlit = Streamlit;
+})();
+</script>
+<script>
 
 const { Streamlit } = window;
 let chart;
