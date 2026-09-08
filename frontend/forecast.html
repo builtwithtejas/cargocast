@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CARGOCAST — Detailed Forecast Analysis</title>
+<!-- Google Fonts: Space Grotesk, Plus Jakarta Sans, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Chart.js for live forecast/demand charts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#c6c9af",
+            "tertiary": "#5b5e67",
+            "outline": "#767963",
+            "inverse-surface": "#2e3132",
+            "background": "#f8f9fa",
+            "surface-container": "#edeeef",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#5a5d66",
+            "on-background": "#191c1d",
+            "on-surface": "#191c1d",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b4d425",
+            "surface-container-high": "#e7e8e9",
+            "surface": "#f8f9fa",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#3f4c00",
+            "on-primary-fixed": "#181e00",
+            "primary-container": "#c4e538",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed-variant": "#43474f",
+            "on-primary-container": "#536400",
+            "surface-container-highest": "#e1e3e4",
+            "inverse-on-surface": "#f0f1f2",
+            "on-surface-variant": "#454935",
+            "primary": "#546500",
+            "secondary": "#5d5e63",
+            "on-secondary-fixed-variant": "#45474b",
+            "primary-fixed-dim": "#b4d425",
+            "on-primary": "#ffffff",
+            "tertiary-fixed-dim": "#c3c6d0",
+            "surface-bright": "#f8f9fa",
+            "on-secondary-fixed": "#1a1c20",
+            "on-secondary-container": "#636469",
+            "secondary-fixed-dim": "#c6c6cc",
+            "tertiary-container": "#d4d7e1",
+            "tertiary-fixed": "#dfe2ec",
+            "surface-container-low": "#f3f4f5",
+            "secondary-container": "#e2e2e8",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#546500",
+            "surface-dim": "#d9dadb",
+            "on-tertiary-fixed": "#181c23",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#cff143",
+            "secondary-fixed": "#e2e2e8",
+            "surface-variant": "#e1e3e4"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-2xl": "3rem",
+            "header-height": "4.25rem",
+            "space-sm": "0.75rem",
+            "gutter-desktop": "1.5rem",
+            "space-xs": "0.5rem",
+            "space-md": "1rem",
+            "space-xl": "2rem",
+            "margin-desktop": "2rem",
+            "space-2xs": "0.25rem",
+            "space-3xl": "4rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Space Grotesk"],
+            "display-xl": ["Space Grotesk"],
+            "data-metric-lg": ["Space Grotesk"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-lg": ["Space Grotesk"],
+            "data-metric-sm": ["JetBrains Mono"],
+            "display-xl-mobile": ["Space Grotesk"],
+            "headline-sm": ["Space Grotesk"],
+            "label-mono-caps": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "body-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-xl": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "data-metric-lg": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "headline-lg": ["36px", { "lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "data-metric-sm": ["18px", { "lineHeight": "22px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-xl-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "label-mono-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Technical Grid Backdrop */
+    .bg-tech-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(15, 17, 21, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 17, 21, 0.05) 1px, transparent 1px);
+    }
+    .hard-shadow {
+      box-shadow: 3px 3px 0px #0f1115;
+    }
+    .hard-shadow-sm {
+      box-shadow: 2px 2px 0px #0f1115;
+    }
+    .hard-shadow-lime {
+      box-shadow: 3px 3px 0px #c4e538;
+    }
+    .corner-cross::before {
+      content: "+";
+      position: absolute;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 14px;
+      line-height: 1;
+      color: #0f1115;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased selection:bg-primary-container selection:text-on-primary-fixed min-h-screen flex flex-col">
+<!-- ================= TOP APP BAR (Shared Component JSON Blueprint) ================= -->
+<header class="bg-inverse-surface dark:bg-inverse-surface border-b border-outline dark:border-outline docked full-width top-0 z-50 sticky">
+<div class="flex justify-between items-center w-full px-margin-desktop h-header-height max-w-full">
+<!-- Brand & Telemetry Anchor -->
+<div class="flex items-center space-x-6">
+<a class="flex items-center space-x-2 group" href="#">
+<span class="text-primary-container dark:text-primary-container text-headline-md font-headline-md font-bold tracking-tight flex items-center gap-1">
+            CARGOCAST
+            <span class="text-primary-container text-lg font-mono">✦</span>
+</span>
+</a>
+<div class="hidden lg:flex items-center bg-[#191c1d] border border-[#3e4244] px-2.5 py-1 text-label-mono-caps font-label-mono-caps text-secondary-fixed-dim">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse mr-2"></span>
+          SCFI SPOT: <span class="text-surface-container-lowest font-bold ml-1">2,140.80</span>
+<span class="text-primary-container ml-1">▲ +4.2%</span>
+</div>
+</div>
+<!-- Navigation Links from JSON: ["Dashboard", "Forecast", "Scenarios"] -->
+<!-- 'Forecast' is autonomously determined as ACTIVE for this page -->
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-secondary-fixed-dim dark:text-secondary-fixed-dim font-label-mono-caps text-label-mono-caps hover:text-surface-container-lowest dark:hover:text-surface-container-lowest pb-1" href="#">
+          Dashboard
+        </a>
+<a class="text-primary-container dark:text-primary-container border-b-2 border-primary-container font-label-mono-caps text-label-mono-caps pb-1 flex items-center gap-1.5" href="#">
+          Forecast
+          <span class="inline-block w-1 h-1 bg-primary-container rounded-full"></span>
+</a>
+<a class="text-secondary-fixed-dim dark:text-secondary-fixed-dim font-label-mono-caps text-label-mono-caps hover:text-surface-container-lowest dark:hover:text-surface-container-lowest pb-1" href="#">
+          Scenarios
+        </a>
+</nav>
+<!-- Trailing Primary Action & Icon Actions from JSON -->
+<div class="flex items-center space-x-4">
+<div class="hidden sm:flex items-center bg-primary-container px-3 py-1 text-on-primary-fixed font-label-mono-caps text-label-mono-caps tracking-wider border border-on-primary-fixed">
+<span class="w-2 h-2 rounded-full bg-on-primary-fixed mr-2"></span>
+          VESSEL AI ACTIVE
+        </div>
+<div class="flex items-center space-x-1 text-secondary-fixed-dim">
+<button class="p-1.5 hover:text-surface-container-lowest transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<button class="p-1.5 hover:text-surface-container-lowest transition-colors" title="Terminal Access">
+<span class="material-symbols-outlined text-[20px]" data-icon="terminal">terminal</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= SUB-HEADER TICKER / MARITIME METADATA RIBBON ================= -->
+<div class="bg-surface-container-lowest border-b border-on-background px-margin-desktop py-2 flex flex-wrap items-center justify-between gap-4 text-label-mono-caps font-label-mono-caps">
+<div class="flex items-center space-x-6 overflow-x-auto py-0.5">
+<div class="flex items-center space-x-2 text-on-surface">
+<span class="text-tertiary">LANE:</span>
+<span class="font-bold bg-surface-container px-1.5 py-0.5 border border-on-background">SHANGHAI (SHA) ➔ ROTTERDAM (RTM)</span>
+</div>
+<div class="flex items-center space-x-2 text-on-surface">
+<span class="text-tertiary">MODEL:</span>
+<span class="font-bold">MC-HYPER-v4.8 (AIS-AUGMENTED)</span>
+</div>
+<div class="flex items-center space-x-2 text-on-surface">
+<span class="text-tertiary">LAST INGEST:</span>
+<span class="text-on-surface font-semibold">T-04m 18s [LIVE STREAM]</span>
+</div>
+</div>
+<div class="flex items-center space-x-3 text-tertiary">
+<span>INDEX CORRELATION: <strong class="text-on-surface">0.978</strong></span>
+<span>|</span>
+<span>AIS PINGS/24H: <strong class="text-on-surface">1.48M</strong></span>
+</div>
+</div>
+<!-- ================= MAIN BODY CANVAS ================= -->
+<main class="flex-1 bg-surface bg-tech-grid px-4 sm:px-margin-desktop py-space-lg max-w-[1600px] w-full mx-auto space-y-space-lg">
+<!-- PAGE HEADER SECTION -->
+<section class="relative bg-surface-container-lowest border-2 border-on-background p-6 md:p-8 hard-shadow">
+<!-- Decorative Corner Crosses -->
+<span aria-hidden="true" class="corner-cross top-1 left-1 absolute"></span>
+<span aria-hidden="true" class="corner-cross top-1 right-3 absolute"></span>
+<span aria-hidden="true" class="corner-cross bottom-3 left-1 absolute"></span>
+<span aria-hidden="true" class="corner-cross bottom-3 right-3 absolute"></span>
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="inline-block w-2.5 h-2.5 bg-primary-container border border-on-background"></span>
+<span class="font-label-mono-caps text-label-mono-caps text-tertiary tracking-widest uppercase">SYSTEM 02 // MULTI-HORIZON PROJECTIONS</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">
+            Detailed Forecast Analysis
+          </h1>
+<p class="text-body-lg font-body-lg text-secondary mt-1 max-w-3xl">
+            Probabilistic Monte Carlo trajectory modeling across Tier 1 maritime shipping lanes.
+          </p>
+</div>
+<!-- Action Pills & Controls -->
+<div class="flex flex-wrap items-center gap-2.5">
+<div class="bg-surface-container-low border border-on-background px-3 py-1.5 text-label-mono-caps font-label-mono-caps text-on-surface flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 bg-primary-container rounded-full"></span>
+            Confidence: 95% CI
+          </div>
+<div class="bg-surface-container-low border border-on-background px-3 py-1.5 text-label-mono-caps font-label-mono-caps text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="calendar_month">calendar_month</span>
+            Horizon: 180 Days
+          </div>
+<button class="bg-primary-container hover:bg-primary-fixed-dim text-on-primary-fixed border-2 border-on-background px-4 py-1.5 font-label-mono-caps text-label-mono-caps font-bold transition-all hard-shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
+            Export CSV / PDF
+          </button>
+</div>
+</div>
+</section>
+<!-- 2-COLUMN ANALYTICAL GRID (Left 68%, Right 32%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-start">
+<!-- ================= LEFT COLUMN: FORECAST CHARTS (8 cols = ~67-68%) ================= -->
+<div class="lg:col-span-8 space-y-gutter-desktop">
+<!-- TOP CARD: Primary Monte Carlo Dual Confidence Chart -->
+<div class="bg-surface-container-lowest border-2 border-on-background p-6 hard-shadow relative">
+<!-- Card Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-surface-container-high gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-label-mono-caps font-label-mono-caps bg-inverse-surface text-primary-container px-2 py-0.5 font-bold">FEU SPOT / INDEXED</span>
+<span class="text-label-mono-caps font-label-mono-caps text-tertiary">CCFI / SCFI BASKET</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface mt-1">
+                Freight Rate Forecast (Capesize &amp; Panamax Weighted Average)
+              </h2>
+</div>
+<!-- Chart Legend -->
+<div class="flex items-center flex-wrap gap-4 text-label-mono-caps font-label-mono-caps text-body-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-0.5 bg-on-surface inline-block"></span>
+<span>Actuals</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-1 bg-primary-container border border-on-background inline-block"></span>
+<span>Projected Mean</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-3 bg-[#c4e538] opacity-50 border border-on-background inline-block"></span>
+<span>50% Band</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-3 bg-[#e8edc8] border border-outline-variant inline-block"></span>
+<span>95% CI</span>
+</div>
+</div>
+</div>
+<!-- LIVE FORECAST CHART (replaces static SVG mockup) -->
+<div class="relative w-full mt-6">
+<!-- Metric Banner inside Chart -->
+<div class="absolute top-2 left-3 z-10 bg-surface-container-lowest/90 backdrop-blur-sm border border-on-background p-3 text-label-mono-caps font-label-mono-caps space-y-1">
+<div class="text-tertiary">PROJECTED 180D TARGET</div>
+<div class="text-headline-md font-headline-md font-bold text-on-surface flex items-baseline gap-2">
+<span id="fc-target">--</span> <span id="fc-target-pct" class="text-data-metric-sm text-primary font-bold">▲ --</span>
+</div>
+<div id="fc-band-range" class="text-tertiary text-[10px]">P95 UPPER: -- | P05 LOWER: --</div>
+</div>
+<div class="w-full" style="height: 340px;">
+<canvas id="detailForecastChart"></canvas>
+</div>
+</div>
+<!-- Bottom Micro-Telemetry Bar -->
+<div class="mt-4 pt-3 border-t border-surface-container-high grid grid-cols-2 sm:grid-cols-4 gap-2 text-label-mono-caps font-label-mono-caps">
+<div class="bg-surface-container p-2 border border-outline-variant">
+<span class="text-tertiary block text-[10px]">HISTORICAL VOLATILITY (30D)</span>
+<span class="font-bold text-on-surface">19.2% σ</span>
+</div>
+<div class="bg-surface-container p-2 border border-outline-variant">
+<span class="text-tertiary block text-[10px]">PREDICTED DRIFT RATE</span>
+<span class="font-bold text-on-surface">+0.14% / DAY</span>
+</div>
+<div class="bg-surface-container p-2 border border-outline-variant">
+<span class="text-tertiary block text-[10px]">SIMULATED RUNS</span>
+<span class="font-bold text-on-surface">100,000 PATHS</span>
+</div>
+<div class="bg-primary-container/30 p-2 border border-on-background">
+<span class="text-on-surface block text-[10px]">TAIL RISK COEFFICIENT</span>
+<span class="font-bold text-on-surface">0.12 (LOW)</span>
+</div>
+</div>
+</div>
+<!-- BOTTOM CARD: Cargo Demand Forecast (Weekly TEU Throughput) -->
+<div class="bg-surface-container-lowest border-2 border-on-background p-6 hard-shadow relative">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-surface-container-high gap-2">
+<div>
+<span class="text-label-mono-caps font-label-mono-caps text-tertiary uppercase">VOLUME TELEMETRY // ASIA-EUROPE CORRIDOR</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">
+                Global Cargo Demand Forecast (TEU Throughput / Week)
+              </h3>
+</div>
+<div class="flex items-center gap-3 text-label-mono-caps font-label-mono-caps">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 bg-on-surface inline-block"></span>
+<span>Recorded TEU</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 bg-primary-container border border-on-background inline-block"></span>
+<span>Predicted TEU</span>
+</div>
+</div>
+</div>
+<!-- Bar Chart Area (Comparative Bar Rendering) -->
+<div class="mt-6">
+<div class="grid grid-cols-12 gap-2 h-44 items-end pt-6 pb-2 px-2 border-b border-on-background bg-surface-container-low/40">
+<!-- W48 (Historical) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono text-tertiary">412k</span>
+<div class="w-full bg-on-surface h-[65%] border border-on-surface transition-all hover:bg-opacity-80"></div>
+<span class="text-[10px] font-mono text-tertiary">W48</span>
+</div>
+<!-- W49 (Historical) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono text-tertiary">425k</span>
+<div class="w-full bg-on-surface h-[70%] border border-on-surface"></div>
+<span class="text-[10px] font-mono text-tertiary">W49</span>
+</div>
+<!-- W50 (Historical) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono text-tertiary">438k</span>
+<div class="w-full bg-on-surface h-[75%] border border-on-surface"></div>
+<span class="text-[10px] font-mono text-tertiary">W50</span>
+</div>
+<!-- W51 (Historical) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono text-tertiary">450k</span>
+<div class="w-full bg-on-surface h-[80%] border border-on-surface"></div>
+<span class="text-[10px] font-mono text-tertiary">W51</span>
+</div>
+<!-- W52 (Historical - Christmas dip) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono text-tertiary">390k</span>
+<div class="w-full bg-on-surface h-[58%] border border-on-surface"></div>
+<span class="text-[10px] font-mono text-tertiary">W52</span>
+</div>
+<!-- W01 (Current/Historical) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end border-r-2 border-dashed border-on-background pr-1">
+<span class="text-[9px] font-mono font-bold text-on-surface">432k</span>
+<div class="w-full bg-on-surface h-[72%] border border-on-surface"></div>
+<span class="text-[10px] font-mono font-bold text-on-surface">W01</span>
+</div>
+<!-- FORECAST BARS (W02 - W07) Electric Lime Focus -->
+<!-- W02 (Projected) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono font-bold text-primary">460k</span>
+<div class="w-full bg-primary-container h-[82%] border border-on-background hard-shadow-sm"></div>
+<span class="text-[10px] font-mono text-primary font-bold">W02*</span>
+</div>
+<!-- W03 (Projected) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono font-bold text-primary">488k</span>
+<div class="w-full bg-primary-container h-[91%] border border-on-background hard-shadow-sm"></div>
+<span class="text-[10px] font-mono text-primary font-bold">W03*</span>
+</div>
+<!-- W04 (Projected Peak) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono font-bold text-on-primary-container">510k</span>
+<div class="w-full bg-primary-container h-[98%] border-2 border-on-background hard-shadow-sm relative">
+<span class="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] font-bold bg-inverse-surface text-primary-container px-0.5">PEAK</span>
+</div>
+<span class="text-[10px] font-mono text-on-primary-container font-bold">W04*</span>
+</div>
+<!-- W05 (Projected Post-LNY slowdown) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono font-bold text-primary">445k</span>
+<div class="w-full bg-primary-container/80 h-[77%] border border-on-background"></div>
+<span class="text-[10px] font-mono text-primary font-bold">W05*</span>
+</div>
+<!-- W06 (Projected) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono font-bold text-primary">420k</span>
+<div class="w-full bg-primary-container/70 h-[68%] border border-on-background"></div>
+<span class="text-[10px] font-mono text-primary font-bold">W06*</span>
+</div>
+<!-- W07 (Projected) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="text-[9px] font-mono font-bold text-primary">435k</span>
+<div class="w-full bg-primary-container/70 h-[74%] border border-on-background"></div>
+<span class="text-[10px] font-mono text-primary font-bold">W07*</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between mt-3 text-label-mono-caps font-label-mono-caps text-tertiary">
+<span>* DENOTES PREDICTIVE MONTE CARLO THROUGHPUT ESTIMATES</span>
+<span class="text-on-surface font-semibold">CAPACITY UTILIZATION: <strong class="text-primary-container bg-inverse-surface px-1.5 py-0.5">93.8%</strong> CRITICAL</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= RIGHT COLUMN: MODEL INTEGRITY & COMPARISON (4 cols = ~32%) ================= -->
+<div class="lg:col-span-4 space-y-gutter-desktop">
+<!-- INVERTED JET-BLACK CARD (#0F1115) WITH LIME ACCENTS -->
+<div class="bg-[#0f1115] text-surface-container-lowest border-2 border-primary-container p-6 hard-shadow relative">
+<!-- Starburst Graphic Top-Right -->
+<span class="absolute top-4 right-4 text-primary-container text-xl font-mono select-none">✦</span>
+<!-- Header -->
+<div class="border-b border-[#2e3132] pb-4">
+<span class="text-label-mono-caps font-label-mono-caps text-primary-container tracking-wider">BACKTEST TELEMETRY</span>
+<h3 class="text-headline-md font-headline-md text-surface-container-lowest mt-0.5">
+              Historical vs. Predicted
+            </h3>
+<p class="text-body-sm font-body-sm text-secondary-fixed-dim mt-1">
+              90-day rolling settlement audit demonstrating variance against true spot indexes.
+            </p>
+</div>
+<!-- Mini Sparkline / Variance Chart -->
+<div class="my-6 bg-[#181a1f] p-4 border border-[#2e3132]">
+<div class="flex items-center justify-between text-label-mono-caps font-label-mono-caps text-secondary-fixed-dim mb-2">
+<span>ACTUAL (WHITE) vs MODEL (LIME)</span>
+<span class="text-primary-container font-bold">94.2% FIT</span>
+</div>
+<!-- SVG Sparkline -->
+<svg class="w-full h-20" viewbox="0 0 300 80">
+<!-- Dotted reference mid-line -->
+<line stroke="#2e3132" stroke-dasharray="2 2" x1="0" x2="300" y1="40" y2="40"></line>
+<!-- Actual Settlement (White line) -->
+<polyline fill="none" points="0,65 30,55 60,60 90,45 120,40 150,48 180,30 210,35 240,25 270,30 300,20" stroke="#ffffff" stroke-linecap="round" stroke-width="2"></polyline>
+<!-- Predicted Trajectory (Lime Line) -->
+<polyline fill="none" points="0,62 30,58 60,55 90,42 120,38 150,45 180,28 210,32 240,28 270,26 300,24" stroke="#c4e538" stroke-dasharray="3 2" stroke-linecap="round" stroke-width="2"></polyline>
+</svg>
+<div class="flex justify-between text-[10px] font-mono text-[#767963] mt-2">
+<span>T-90 DAYS</span>
+<span>T-45 DAYS</span>
+<span>SETTLED TODAY</span>
+</div>
+</div>
+<!-- 3 Bullet Stats with Lime-Green Indicator Tags -->
+<div class="space-y-4">
+<!-- Stat 1 -->
+<div class="bg-[#181a1f] p-3 border-l-4 border-primary-container">
+<div class="flex items-center justify-between">
+<span class="text-label-mono-caps font-label-mono-caps text-secondary-fixed-dim">MODEL ACCURACY (MAE)</span>
+<span class="bg-primary-container text-on-primary-fixed font-label-mono-caps text-label-mono-caps px-1.5 py-0.2 font-bold">+38% BENCHMARK</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-bold text-surface-container-lowest mt-1">
+                $82 / FEU
+              </div>
+<p class="text-body-sm text-secondary-fixed-dim text-[12px] mt-0.5">
+                Mean Absolute Error outperforming Baltic benchmark index predictions by 38%.
+              </p>
+</div>
+<!-- Stat 2 -->
+<div class="bg-[#181a1f] p-3 border-l-4 border-primary-container">
+<div class="flex items-center justify-between">
+<span class="text-label-mono-caps font-label-mono-caps text-secondary-fixed-dim">DIRECTIONAL ACCURACY</span>
+<span class="bg-primary-container text-on-primary-fixed font-label-mono-caps text-label-mono-caps px-1.5 py-0.2 font-bold">HIGH CONF</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-bold text-primary-container mt-1">
+                94.2%
+              </div>
+<p class="text-body-sm text-secondary-fixed-dim text-[12px] mt-0.5">
+                Exact turning-point detection across 18 consecutive weekly rate revisions.
+              </p>
+</div>
+<!-- Stat 3 -->
+<div class="bg-[#181a1f] p-3 border-l-4 border-primary-container">
+<div class="flex items-center justify-between">
+<span class="text-label-mono-caps font-label-mono-caps text-secondary-fixed-dim">VOLATILITY VARIANCE</span>
+<span class="bg-[#2e3132] text-surface-container-lowest font-label-mono-caps text-label-mono-caps px-1.5 py-0.2">RESIDUAL</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-bold text-surface-container-lowest mt-1">
+                -4.1%
+              </div>
+<p class="text-body-sm text-secondary-fixed-dim text-[12px] mt-0.5">
+                Low residual divergence under extreme black-swan routing conditions (Red Sea bypass).
+              </p>
+</div>
+</div>
+<!-- Model Training Pill / Note -->
+<div class="mt-6 pt-4 border-t border-[#2e3132] flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary-container text-[18px]" data-icon="memory">memory</span>
+<div class="text-label-mono-caps font-label-mono-caps text-secondary-fixed-dim text-[10.5px]">
+              Trained on 14.2M AIS vessel pings &amp; customs manifests.
+            </div>
+</div>
+</div>
+<!-- ROUTE VOLATILITY ALERT BOX (Architectural Slab) -->
+<div class="bg-surface-container-lowest border-2 border-on-background p-5 hard-shadow">
+<div class="flex items-center gap-2 text-label-mono-caps font-label-mono-caps text-error font-bold mb-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="warning">warning</span>
+            ASYMMETRIC RISK FACTOR DETECTED
+          </div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface">Cape of Good Hope Diversion</h4>
+<p class="text-body-sm font-body-sm text-secondary mt-1">
+            +12.4 Transit Days added to Far East ➔ North Europe trade. Bunker fuel delta projected to widen FEU rate variance by ±$240 during February.
+          </p>
+<div class="mt-4 pt-3 border-t border-surface-container-high flex justify-between items-center text-label-mono-caps font-label-mono-caps">
+<span class="text-tertiary">IMPACT SCORE:</span>
+<span class="bg-surface-container-highest px-2 py-0.5 font-bold text-on-surface">8.4 / 10.0</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= BOTTOM FULL-WIDTH SECTION: CONFIDENCE BANDS EXPLAINER ================= -->
+<section class="bg-primary-container border-2 border-on-background p-6 md:p-8 hard-shadow relative">
+<!-- Starburst & Corner Tag -->
+<div class="flex items-center justify-between pb-4 border-b-2 border-on-background">
+<div class="flex items-center gap-3">
+<span class="bg-on-background text-primary-container p-1 font-mono font-bold text-sm">✦ METHODOLOGY</span>
+<h3 class="text-headline-md font-headline-md text-on-primary-fixed uppercase tracking-tight">
+            Understanding Confidence Bands &amp; FFA Hedging Trajectories
+          </h3>
+</div>
+<div class="hidden sm:block text-label-mono-caps font-label-mono-caps font-bold text-on-primary-fixed">
+          MONTE CARLO PROBABILISTIC CONE
+        </div>
+</div>
+<!-- Funnel / Cone Diagram Visualizer -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6 items-center">
+<!-- Explanatory Funnel Visual (Left 7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest border-2 border-on-background p-5 hard-shadow-sm">
+<div class="text-label-mono-caps font-label-mono-caps text-tertiary mb-3 flex items-center justify-between">
+<span>PROJECTION DISPERSION CONE (DAYS T+0 TO T+180)</span>
+<span class="text-on-surface font-bold">100k SIMULATED FUTURES</span>
+</div>
+<!-- SVG Visual Cone -->
+<svg class="w-full h-auto text-label-mono-caps" style="font-family: 'JetBrains Mono', monospace;" viewbox="0 0 500 160">
+<!-- Background Horizon Grid -->
+<line stroke="#e1e3e4" stroke-dasharray="2 2" x1="0" x2="500" y1="80" y2="80"></line>
+<line stroke="#0f1115" stroke-dasharray="3 3" stroke-width="0.8" x1="160" x2="160" y1="10" y2="150"></line>
+<line stroke="#767963" stroke-dasharray="3 3" stroke-width="0.8" x1="330" x2="330" y1="10" y2="150"></line>
+<!-- Cone Geometric Expansion (Left narrow -> Right wide) -->
+<!-- 95% Confidence Cone (Outer) -->
+<polygon fill="#e8edc8" opacity="0.6" points="10,80 160,50 330,25 490,10 490,150 330,135 160,110 10,80" stroke="#0f1115" stroke-width="1.5"></polygon>
+<!-- 50% Confidence Cone (Inner Core) -->
+<polygon fill="#c4e538" points="10,80 160,65 330,50 490,40 490,120 330,110 160,95 10,80" stroke="#546500" stroke-width="1"></polygon>
+<!-- Center Trajectory Vector -->
+<line stroke="#0f1115" stroke-width="2.5" x1="10" x2="490" y1="80" y2="78"></line>
+<!-- Point 0 Anchor -->
+<circle cx="10" cy="80" fill="#0f1115" r="4"></circle>
+<!-- Labels within SVG -->
+<text fill="#0f1115" font-size="9" font-weight="700" x="25" y="45">0–30 DAYS</text>
+<text fill="#454935" font-size="8" x="25" y="58">AIS CONFIRMED</text>
+<text fill="#0f1115" font-size="9" font-weight="700" x="180" y="38">30–90 DAYS</text>
+<text fill="#454935" font-size="8" x="180" y="50">BUNKER / CARRIER BLANKS</text>
+<text fill="#0f1115" font-size="9" font-weight="700" x="350" y="22">90–180 DAYS</text>
+<text fill="#454935" font-size="8" x="350" y="34">MACRO DEMAND RISK</text>
+</svg>
+<!-- Cone Stage Description Blocks -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-3 border-t border-surface-container-high text-body-sm font-body-sm">
+<div class="bg-surface-container p-2.5 border border-on-background">
+<div class="text-label-mono-caps font-label-mono-caps font-bold text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 bg-on-surface"></span>
+                Narrow Band = High Confidence
+              </div>
+<p class="text-secondary text-[12px] mt-1">
+<strong>(0–30 Days):</strong> Physical vessel positioning confirmed via live AIS transponders, port congestion queue deterministic, blank sailings declared.
+              </p>
+</div>
+<div class="bg-surface-container p-2.5 border border-on-background">
+<div class="text-label-mono-caps font-label-mono-caps font-bold text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 bg-primary-container border border-on-background"></span>
+                Wide Band = High Uncertainty
+              </div>
+<p class="text-secondary text-[12px] mt-1">
+<strong>(60–180 Days):</strong> Macro trade balance variance, fleet speed adjustments, fuel price spikes, and geopolitical chokepoint deviations expand probability boundaries.
+              </p>
+</div>
+</div>
+</div>
+<!-- Editorial Instructions for Charterers & Risk Desks (Right 5 Cols) -->
+<div class="lg:col-span-5 bg-on-surface text-surface-container-lowest p-6 border-2 border-on-background hard-shadow-sm space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[20px]" data-icon="shield_with_heart">shield_with_heart</span>
+<span class="text-label-mono-caps font-label-mono-caps text-primary-container uppercase tracking-wider">CHARTERER PROTOCOL</span>
+</div>
+<h4 class="text-headline-sm font-headline-sm text-surface-container-lowest">
+            Actionable Risk Thresholds for Forward Freight Agreements (FFAs)
+          </h4>
+<p class="text-body-sm font-body-sm text-secondary-fixed-dim leading-relaxed">
+            When predicted median rates pierce the upper 50% band 60 days forward, freight desks should lock in forward paper contracts to protect export margin. 
+            Conversely, a diverging 95% band signals extreme tail risk—warranting index-linked contracts with flexible spot clauses rather than static multi-quarter fixed commitments.
+          </p>
+<div class="pt-2">
+<a class="inline-flex items-center gap-2 bg-primary-container text-on-primary-fixed px-4 py-2 text-label-mono-caps font-label-mono-caps font-bold uppercase hover:bg-primary-fixed-dim transition-all" href="#">
+<span>Execute FFA Simulation</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- ================= FOOTER / SYSTEM TELEMETRY STRIP ================= -->
+<footer class="bg-inverse-surface border-t border-outline text-secondary-fixed-dim py-4 px-margin-desktop mt-auto">
+<div class="max-w-[1600px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-label-mono-caps font-label-mono-caps text-[11px]">
+<div class="flex items-center space-x-4">
+<span class="text-surface-container-lowest font-bold">CARGOCAST INTELLIGENCE</span>
+<span>•</span>
+<span>ENGINE: AIS-MC-v4.8</span>
+<span>•</span>
+<span class="text-primary-container">NODE: FRANKFURT-01 (SYNCHRONIZED)</span>
+</div>
+<div class="flex items-center space-x-6">
+<a class="hover:text-surface-container-lowest transition-colors" href="#">METHODOLOGY DOCS</a>
+<a class="hover:text-surface-container-lowest transition-colors" href="#">BALTIC INDEX CORRELATION</a>
+<a class="hover:text-surface-container-lowest transition-colors" href="#">SECURITY CLEARANCE</a>
+</div>
+</div>
+</footer>
+<script>
+  const API_BASE = "http://127.0.0.1:8000";
+  const LIME = "#c4e538";
+
+  let detailChart;
+
+  function fmtUSD(v) {
+    return "$" + Number(v).toLocaleString("en-US", { maximumFractionDigits: 0 });
+  }
+
+  function renderDetailChart(dates, forecast, lower, upper) {
+    const ctx = document.getElementById("detailForecastChart").getContext("2d");
+    const data = {
+      labels: dates,
+      datasets: [
+        {
+          label: "Upper (P95)",
+          data: upper,
+          borderColor: "transparent",
+          backgroundColor: "rgba(196,229,56,0.20)",
+          pointRadius: 0,
+          fill: "+1",
+          tension: 0.35,
+        },
+        {
+          label: "Lower (P05)",
+          data: lower,
+          borderColor: "transparent",
+          backgroundColor: "rgba(196,229,56,0.20)",
+          pointRadius: 0,
+          fill: false,
+          tension: 0.35,
+        },
+        {
+          label: "Projected Mean",
+          data: forecast,
+          borderColor: LIME,
+          borderWidth: 3,
+          backgroundColor: LIME,
+          pointRadius: 0,
+          tension: 0.35,
+          fill: false,
+        },
+      ],
+    };
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: "#0f1115" },
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: "#767963", font: { family: "JetBrains Mono", size: 10 }, maxTicksLimit: 8 },
+        },
+        y: {
+          grid: { color: "#e1e3e4", borderDash: [3, 3] },
+          ticks: { color: "#767963", font: { family: "JetBrains Mono", size: 10 } },
+        },
+      },
+    };
+
+    if (detailChart) {
+      detailChart.data = data;
+      detailChart.update();
+    } else {
+      detailChart = new Chart(ctx, { type: "line", data, options });
+    }
+  }
+
+  async function loadForecastDetail() {
+    const res = await fetch(`${API_BASE}/api/forecast?horizon_days=180`);
+    const f = await res.json();
+    renderDetailChart(f.dates, f.forecast, f.lower, f.upper);
+
+    const last = f.forecast.length - 1;
+    const startVal = f.forecast[0];
+    const endVal = f.forecast[last];
+    const pct = (((endVal - startVal) / startVal) * 100).toFixed(1);
+
+    document.getElementById("fc-target").textContent = fmtUSD(endVal) + "/t";
+    document.getElementById("fc-target-pct").textContent =
+      (pct >= 0 ? "▲ +" : "▼ ") + pct + "%";
+    document.getElementById("fc-band-range").textContent =
+      `P95 UPPER: ${fmtUSD(Math.max(...f.upper))} | P05 LOWER: ${fmtUSD(Math.min(...f.lower))}`;
+  }
+
+  loadForecastDetail();
+</script>
+</body></html>

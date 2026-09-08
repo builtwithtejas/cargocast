@@ -1,0 +1,95 @@
+[
+  {
+    "news_id": "NEWS_001",
+    "timestamp": "2026-08-28T09:30:00Z",
+    "headline": "IMD issues deep depression alert over Bay of Bengal; severe cyclone warning for Odisha and Andhra coast",
+    "source": "India Meteorological Department (IMD)",
+    "raw_text": "A deep depression over the east-central Bay of Bengal has intensified into a severe cyclonic storm moving northwestwards. Wind speeds reaching 90-110 kmph are forecasted along the Odisha and North Andhra coasts. Paradip, Dhamra, and Visakhapatnam ports have been advised to hoist local cautionary signal no. 4. Vessel berthing and pilotage suspended for next 72 hours.",
+    "target_ports": [
+      "IN_PRT",
+      "IN_DHM",
+      "IN_VTZ_OUTER",
+      "IN_VTZ_INNER"
+    ],
+    "regions": [
+      "Bay of Bengal",
+      "East Coast India"
+    ],
+    "expected_category": "CYCLONE_MONSOON"
+  },
+  {
+    "news_id": "NEWS_002",
+    "timestamp": "2026-08-29T14:15:00Z",
+    "headline": "Dockworkers union calls indefinite strike at Paradip Port over wage revision and pension scheme",
+    "source": "Maritime Gateway India",
+    "raw_text": "Dry bulk handling at Paradip port ground to a halt today as major dock labor unions announced an indefinite strike. Over 18 Capesize and Panamax bulk carriers are queued at outer anchorage awaiting discharge. Waiting times are expected to surge past 8 days with demurrage accruals exceeding $20,000 per vessel day.",
+    "target_ports": [
+      "IN_PRT"
+    ],
+    "regions": [
+      "East Coast India"
+    ],
+    "expected_category": "LABOR_STRIKE"
+  },
+  {
+    "news_id": "NEWS_003",
+    "timestamp": "2026-08-30T11:00:00Z",
+    "headline": "Haldia river draft drops to 7.2 meters post-monsoon siltation; Kolkata Port Trust mandates two-stage lighterage at Sandheads",
+    "source": "Port Strategy Bulletin",
+    "raw_text": "Heavy siltation along the Auckland bar and Jellingham channel in the Hooghly river has compressed allowable draft to 7.2m on spring tides. Syama Prasad Mookerjee Port Authority has instructed all incoming bulk coal charters to discharge a minimum of 40% cargo at Sandheads deepwater anchorage prior to proceeding inward.",
+    "target_ports": [
+      "IN_HLD",
+      "IN_SGR_ANCH"
+    ],
+    "regions": [
+      "East Coast India",
+      "Hooghly River"
+    ],
+    "expected_category": "PORT_CONGESTION"
+  },
+  {
+    "news_id": "NEWS_004",
+    "timestamp": "2026-08-31T08:20:00Z",
+    "headline": "Bunker fuel prices surge 8.5% in Singapore as crude futures rally on Middle East geopolitical friction",
+    "source": "Bunkerspot Intelligence",
+    "raw_text": "Very Low Sulphur Fuel Oil (VLSFO) prices in Singapore and Fujairah spiked past $685/MT this morning, a sudden 8.5% weekly surge following renewed security concerns around shipping straits and OPEC+ production restraint. Shipowners are raising voyage freight quotes to factor in rising bunker costs.",
+    "target_ports": [],
+    "regions": [
+      "Global",
+      "Singapore",
+      "Middle East"
+    ],
+    "expected_category": "GEOPOLITICAL_REGULATORY"
+  },
+  {
+    "news_id": "NEWS_005",
+    "timestamp": "2026-09-01T16:45:00Z",
+    "headline": "Queensland coal rail line undergoes unplanned maintenance following derailment near Dalrymple Bay",
+    "source": "Argus Media / Platts",
+    "raw_text": "Aurizon network announced emergency track repairs on the Goonyella coal rail system feeding Hay Point and Dalrymple Bay Coal Terminal (DBCT). Train turnaround is curtailed by 40% over the next 5 days, triggering vessel berthing delays at Hay Point anchorage for coking coal Capesize stems.",
+    "target_ports": [
+      "AU_HPT"
+    ],
+    "regions": [
+      "Australia",
+      "Queensland"
+    ],
+    "expected_category": "PORT_CONGESTION"
+  },
+  {
+    "news_id": "NEWS_006",
+    "timestamp": "2026-09-02T10:00:00Z",
+    "headline": "Normal cargo operations resume at Gangavaram and Visakhapatnam ports following clear weather clearance",
+    "source": "The Hindu BusinessLine",
+    "raw_text": "Following the weakening of the low-pressure depression, port operations have normalized at Gangavaram and Vizag Outer Harbour. Discharge rates have rebounded to 45,000 MT per day with all 5 bulk berths operating at full capacity. Waiting queues cleared to normal 1.8 days.",
+    "target_ports": [
+      "IN_GNR",
+      "IN_VTZ_OUTER"
+    ],
+    "regions": [
+      "East Coast India",
+      "Andhra Pradesh"
+    ],
+    "expected_category": "OPERATIONAL_NORMAL"
+  }
+]

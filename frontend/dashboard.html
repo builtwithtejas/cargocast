@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CARGOCAST — Freight Rate Forecast Dashboard</title>
+<!-- Google Fonts: Space Grotesk, Plus Jakarta Sans, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with CDN Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Chart.js for the live forecast chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#c6c9af",
+            "tertiary": "#5b5e67",
+            "outline": "#767963",
+            "inverse-surface": "#0f1115",
+            "background": "#ffffff",
+            "surface-container": "#edeeef",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#5a5d66",
+            "on-background": "#0f1115",
+            "on-surface": "#0f1115",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b4d425",
+            "surface-container-high": "#e7e8e9",
+            "surface": "#f8f9fa",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#3f4c00",
+            "on-primary-fixed": "#181e00",
+            "primary-container": "#c4e538",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed-variant": "#43474f",
+            "on-primary-container": "#536400",
+            "surface-container-highest": "#e1e3e4",
+            "inverse-on-surface": "#f0f1f2",
+            "on-surface-variant": "#454935",
+            "primary": "#546500",
+            "secondary": "#5d5e63",
+            "on-secondary-fixed-variant": "#45474b",
+            "primary-fixed-dim": "#b4d425",
+            "on-primary": "#ffffff",
+            "tertiary-fixed-dim": "#c3c6d0",
+            "surface-bright": "#f8f9fa",
+            "on-secondary-fixed": "#1a1c20",
+            "on-secondary-container": "#636469",
+            "secondary-fixed-dim": "#c6c6cc",
+            "tertiary-container": "#d4d7e1",
+            "tertiary-fixed": "#dfe2ec",
+            "surface-container-low": "#f3f4f5",
+            "secondary-container": "#e2e2e8",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#546500",
+            "surface-dim": "#d9dadb",
+            "on-tertiary-fixed": "#181c23",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#cff143",
+            "secondary-fixed": "#e2e2e8",
+            "surface-variant": "#e1e3e4"
+          },
+          "borderRadius": {
+            "DEFAULT": "0px",
+            "lg": "0px",
+            "xl": "0px",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-2xl": "3rem",
+            "header-height": "4.25rem",
+            "space-sm": "0.75rem",
+            "gutter-desktop": "1.5rem",
+            "space-xs": "0.5rem",
+            "space-md": "1rem",
+            "space-xl": "2rem",
+            "margin-desktop": "2rem",
+            "space-2xs": "0.25rem",
+            "space-3xl": "4rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "display-xl": ["Space Grotesk", "sans-serif"],
+            "data-metric-lg": ["Space Grotesk", "sans-serif"],
+            "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "data-metric-sm": ["JetBrains Mono", "monospace"],
+            "display-xl-mobile": ["Space Grotesk", "sans-serif"],
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "label-mono-caps": ["JetBrains Mono", "monospace"],
+            "headline-lg-mobile": ["Space Grotesk", "sans-serif"],
+            "body-md": ["Plus Jakarta Sans", "sans-serif"],
+            "body-sm": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-xl": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "data-metric-lg": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "headline-lg": ["36px", { "lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "data-metric-sm": ["18px", { "lineHeight": "22px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-xl-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "label-mono-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    /* Technical crosshair markings */
+    .crosshair-corner {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      pointer-events: none;
+    }
+    .crosshair-tl { top: -5px; left: -5px; }
+    .crosshair-tr { top: -5px; right: -5px; }
+    .crosshair-bl { bottom: -5px; left: -5px; }
+    .crosshair-br { bottom: -5px; right: -5px; }
+
+    /* Custom range input styling */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    input[type=range]:focus {
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      border-radius: 9999px;
+      background: #c4e538;
+      border: 2px solid #0f1115;
+      cursor: pointer;
+      margin-top: -9px;
+      box-shadow: 2px 2px 0px #0f1115;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 3px;
+      cursor: pointer;
+      background: #0f1115;
+      border: none;
+    }
+
+    /* Subtle grid wallpaper */
+    .bg-grid-tech {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(15, 17, 21, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 17, 21, 0.05) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col bg-grid-tech">
+<!-- ================= TOP NAV BAR (SHARED COMPONENT) ================= -->
+<header class="bg-inverse-surface dark:bg-inverse-surface border-b border-outline dark:border-outline docked full-width top-0 z-50 sticky">
+<div class="flex justify-between items-center w-full px-margin-desktop h-header-height max-w-full">
+<!-- Brand Logo Area -->
+<div class="flex items-center gap-3">
+<a class="flex items-center gap-2" href="#">
+<span class="text-primary-container font-headline-md text-headline-md font-bold tracking-tight">CARGOCAST</span>
+<span class="text-primary-container text-lg font-headline-md select-none">✦</span>
+</a>
+<div class="h-4 w-[1px] bg-secondary hidden sm:block"></div>
+<span class="font-label-mono-caps text-label-mono-caps text-secondary-fixed-dim uppercase hidden md:inline-block tracking-wider">MARITIME PREDICTIVE SYSTEM</span>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-8 h-full">
+<!-- Dashboard (Active) -->
+<a class="text-primary-container dark:text-primary-container border-b-2 border-primary-container font-label-mono-caps text-label-mono-caps pb-1 h-full flex items-center transition-none" href="#">
+          Dashboard
+        </a>
+<!-- Forecast (Inactive) -->
+<a class="text-secondary-fixed-dim dark:text-secondary-fixed-dim font-label-mono-caps text-label-mono-caps hover:text-surface-container-lowest dark:hover:text-surface-container-lowest pb-1 h-full flex items-center transition-colors" href="#">
+          Forecast
+        </a>
+<!-- Scenarios (Inactive) -->
+<a class="text-secondary-fixed-dim dark:text-secondary-fixed-dim font-label-mono-caps text-label-mono-caps hover:text-surface-container-lowest dark:hover:text-surface-container-lowest pb-1 h-full flex items-center transition-colors" href="#">
+          Scenarios
+        </a>
+</nav>
+<!-- Trailing Action Badges & Icons -->
+<div class="flex items-center gap-4">
+<!-- Trailing Primary Badge -->
+<div class="flex items-center gap-2 bg-on-background/60 border border-primary-container/40 px-3 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
+<span class="font-label-mono-caps text-label-mono-caps text-primary-container font-bold">VESSEL AI ACTIVE</span>
+</div>
+<div class="flex items-center gap-2 border-l border-outline/30 pl-3">
+<button class="text-secondary-fixed-dim hover:text-primary-container p-1 transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<button class="text-secondary-fixed-dim hover:text-primary-container p-1 transition-colors" title="Terminal Console">
+<span class="material-symbols-outlined text-[20px]" data-icon="terminal">terminal</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= MAIN CONTAINER ================= -->
+<main class="flex-1 w-full max-w-[1600px] mx-auto px-margin-desktop py-8 space-y-6">
+<!-- PAGE HEADER -->
+<div class="border-b border-on-background pb-6 pt-2">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="font-label-mono-caps text-label-mono-caps bg-on-background text-surface-container-lowest px-2 py-0.5 font-bold tracking-widest">SYSTEM 01 // FREIGHT INTELLIGENCE</span>
+<span class="font-label-mono-caps text-label-mono-caps text-tertiary">| LAT 34.0522° N, LON 118.2437° W</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-background tracking-tight">
+            Freight Rate Forecast Dashboard
+          </h1>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<!-- Live Forecast Pill Badge -->
+<div class="inline-flex items-center gap-2 bg-primary-container text-on-background border border-on-background px-3.5 py-1.5 rounded-full shadow-[2px_2px_0px_#0f1115]">
+<span class="w-2 h-2 rounded-full bg-on-background animate-pulse"></span>
+<span class="font-label-mono-caps text-label-mono-caps font-bold">Live Forecast — Updated Today</span>
+</div>
+<!-- Ingestion Timestamp Pill -->
+<div class="inline-flex items-center gap-1.5 bg-surface-container-low border border-on-background px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="sync">sync</span>
+<span class="font-label-mono-caps text-label-mono-caps text-tertiary">BALTIC EXCHANGE INDEX (BDI) — REAL-TIME INGESTION</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= 2-COLUMN GRID SECTION ================= -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-stretch">
+<!-- LEFT COLUMN: LINE CHART VISUALIZATION (65% -> col-span-8 approx) -->
+<section class="lg:col-span-8 bg-surface-container-lowest border border-on-background relative flex flex-col p-6 shadow-[3px_3px_0px_#0f1115]">
+<!-- Corner Crosshair Accents -->
+<svg class="crosshair-corner crosshair-tl" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<svg class="crosshair-corner crosshair-tr" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<svg class="crosshair-corner crosshair-bl" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<svg class="crosshair-corner crosshair-br" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<!-- Chart Header & Horizon Toggles -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-on-background/20 gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-mono-caps text-label-mono-caps text-tertiary">BENCHMARK: FEU TRANSIT</span>
+<span class="text-xs">✦</span>
+<span class="font-label-mono-caps text-label-mono-caps text-on-surface-variant font-bold">ROUTE: SHA ➔ LAX</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-background mt-0.5">
+              TRANS-PACIFIC SPOT RATE FORECAST (USD / FEU)
+            </h2>
+</div>
+<!-- Time Horizon Toggles -->
+<div class="flex items-center border border-on-background p-0.5 bg-surface-container-low">
+<button class="px-3 py-1 font-label-mono-caps text-label-mono-caps text-tertiary hover:text-on-background transition-colors">30D</button>
+<button class="px-3 py-1 font-label-mono-caps text-label-mono-caps text-tertiary hover:text-on-background transition-colors">60D</button>
+<button class="px-3 py-1 font-label-mono-caps text-label-mono-caps bg-on-background text-surface-container-lowest font-bold">90D</button>
+<button class="px-3 py-1 font-label-mono-caps text-label-mono-caps text-tertiary hover:text-on-background transition-colors">1Y</button>
+</div>
+</div>
+<!-- Legend Ribbon -->
+<div class="flex items-center gap-6 py-3 font-label-mono-caps text-label-mono-caps text-tertiary border-b border-outline-variant/30">
+<div class="flex items-center gap-2">
+<span class="w-3 h-1 bg-on-background"></span>
+<span>Historical Actuals</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-1.5 bg-primary-container border border-on-background"></span>
+<span class="text-on-background font-bold">Neural Forecast (Modeled)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-primary-container/20 border border-primary-container/60"></span>
+<span>95% Confidence Band</span>
+</div>
+<div class="ml-auto font-label-mono-caps text-label-mono-caps text-on-surface-variant">
+            SIGMA VARIANCE: ±$142.30
+          </div>
+</div>
+<!-- LIVE DATA-DRIVEN CHART (replaces static SVG mockup) -->
+<div class="relative w-full flex-1 min-h-[340px] pt-4">
+<canvas id="forecastChart"></canvas>
+</div>
+<!-- Footer Metric Status Bar -->
+<div class="mt-4 pt-3 border-t border-on-background/20 flex flex-wrap items-center justify-between gap-4 font-label-mono-caps text-label-mono-caps text-on-surface-variant">
+<div class="flex items-center gap-4">
+<span>MODEL: CARGO-TRANSFORMER-V4</span>
+<span>•</span>
+<span>CONFIDENCE: 94.8%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+<span>DATA SOURCE: SHANGHAI SHIPPING EXCHANGE &amp; AIS BEACONS</span>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: AI RECOMMENDATION CARD (35% -> col-span-4 approx) -->
+<section class="lg:col-span-4 bg-inverse-surface border-2 border-primary-container text-surface-container-lowest p-6 flex flex-col justify-between relative shadow-[4px_4px_0px_#0f1115]">
+<!-- Angular Tech Accent in Top Right -->
+<div class="absolute top-0 right-0 w-8 h-8 overflow-hidden pointer-events-none">
+<div class="absolute transform rotate-45 bg-primary-container w-12 h-2 -top-1 -right-4"></div>
+</div>
+<div>
+<!-- Header Area -->
+<div class="flex items-center justify-between pb-3 border-b border-secondary">
+<span class="font-label-mono-caps text-label-mono-caps text-primary-container tracking-widest font-bold">AI DISPATCH PROTOCOL // 04</span>
+<span class="text-primary-container text-sm">✦</span>
+</div>
+<div class="mt-4">
+<span class="font-label-mono-caps text-label-mono-caps text-secondary-fixed-dim uppercase">Recommendation</span>
+<!-- Primary Directive Display -->
+<div class="mt-2 bg-on-background/40 border border-primary-container/40 p-4">
+<h3 id="rec-headline" class="font-headline-lg text-headline-lg text-primary-container tracking-tight leading-none uppercase">
+                LOADING...
+              </h3>
+<p class="font-label-mono-caps text-label-mono-caps text-surface-container-high mt-2 flex items-center gap-1.5">
+<span class="text-primary-container font-bold">▲ DIRECTIVE PRIORITY 01</span>
+<span id="rec-sentiment">• ANALYZING</span>
+</p>
+</div>
+<!-- Reasoning Narrative -->
+<p id="rec-reason" class="font-body-md text-body-md text-surface-container-low mt-4 leading-relaxed">
+              Fetching latest forecast and recommendation...
+            </p>
+<!-- Stat Badges Row -->
+<div class="flex items-center gap-3 mt-6">
+<div class="inline-flex items-center gap-1.5 bg-primary-container text-on-background px-3.5 py-1.5 rounded-full font-label-mono-caps text-label-mono-caps font-bold">
+<span class="material-symbols-outlined text-base leading-none" data-icon="trending_up">trending_up</span>
+<span id="rec-trend">Trend --</span>
+</div>
+<div class="inline-flex items-center gap-1.5 bg-surface-container-lowest/10 border border-secondary text-primary-container px-3.5 py-1.5 rounded-full font-label-mono-caps text-label-mono-caps font-bold">
+<span class="material-symbols-outlined text-base leading-none" data-icon="shield">shield</span>
+<span id="rec-risk">Risk --</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Section Bottom -->
+<div class="mt-8 pt-6 border-t border-secondary space-y-3">
+<button class="w-full bg-primary-container hover:bg-inverse-primary text-on-background font-headline-sm text-headline-sm py-3 px-4 border-2 border-on-background shadow-[3px_3px_0px_#0f1115] hover:shadow-[1px_1px_0px_#0f1115] hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex items-center justify-center gap-2">
+<span class="tracking-tight font-bold">EXECUTE CONTRACT HEDGE</span>
+<span class="material-symbols-outlined font-bold text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<div class="flex justify-between items-center text-[10px] font-label-mono-caps text-secondary-fixed-dim px-1">
+<span>AUTOMATED VIA SMART CONTRACT OR FIXTURE DESK</span>
+<span class="text-primary-container font-semibold">T+0 SETTLEMENT</span>
+</div>
+</div>
+</section>
+</div>
+<!-- ================= MIDDLE SECTION: SENSITIVITY CONTROLS ================= -->
+<section class="bg-surface-container-lowest border border-on-background p-6 shadow-[3px_3px_0px_#0f1115] relative">
+<!-- Crosshair Accents -->
+<svg class="crosshair-corner crosshair-tl" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<svg class="crosshair-corner crosshair-tr" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<!-- Section Title -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-on-background/20 gap-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-background">SENSITIVITY CONTROLS (RAPID SIMULATION)</span>
+<span class="bg-surface-container-high border border-on-background px-2 py-0.5 font-label-mono-caps text-label-mono-caps text-on-background font-bold">MONTE CARLO READY</span>
+</div>
+<span class="font-label-mono-caps text-label-mono-caps text-tertiary">INTERACTIVE PARAMETER OVERRIDES // RE-RUNNING ENGINE</span>
+</div>
+<!-- 3 Interactive-Styled Range Sliders Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+<!-- Slider 1: Fuel Price Shock -->
+<div class="p-4 bg-surface border border-on-background flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-mono-caps text-label-mono-caps text-on-surface-variant uppercase font-bold">Fuel Price Shock (%)</span>
+<span id="fuel-value" class="font-label-mono-caps text-label-mono-caps bg-primary-container text-on-background px-2 py-0.5 font-bold border border-on-background">
+              +0%
+            </span>
+</div>
+<div class="mt-6 mb-2">
+<input aria-label="Fuel Price Shock" class="w-full" id="fuel-slider" max="30" min="-20" type="range" value="0"/>
+<div class="flex justify-between font-label-mono-caps text-[10px] text-tertiary mt-2">
+<span>-20%</span>
+<span>BASE</span>
+<span>+30%</span>
+</div>
+</div>
+</div>
+<!-- Slider 2: Port Delay -->
+<div class="p-4 bg-surface border border-on-background flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-mono-caps text-label-mono-caps text-on-surface-variant uppercase font-bold">Port / Cyclone Delay (Days)</span>
+<span id="delay-value" class="font-label-mono-caps text-label-mono-caps bg-primary-container text-on-background px-2 py-0.5 font-bold border border-on-background">
+              0 Days
+            </span>
+</div>
+<div class="mt-6 mb-2">
+<input aria-label="Port Delay" class="w-full" id="delay-slider" max="15" min="0" step="1" type="range" value="0"/>
+<div class="flex justify-between font-label-mono-caps text-[10px] text-tertiary mt-2">
+<span>0 D</span>
+<span>NORMAL</span>
+<span>+15 D</span>
+</div>
+</div>
+</div>
+<!-- Slider 3: Demand Shock -->
+<div class="p-4 bg-surface border border-on-background flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-mono-caps text-label-mono-caps text-on-surface-variant uppercase font-bold">Demand Shock (%)</span>
+<span id="demand-value" class="font-label-mono-caps text-label-mono-caps bg-primary-container text-on-background px-2 py-0.5 font-bold border border-on-background">
+              +0%
+            </span>
+</div>
+<div class="mt-6 mb-2">
+<input aria-label="Demand Shock" class="w-full" id="demand-slider" max="25" min="-20" type="range" value="0"/>
+<div class="flex justify-between font-label-mono-caps text-[10px] text-tertiary mt-2">
+<span>-20%</span>
+<span>PAR (0%)</span>
+<span>+25%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= BOTTOM SECTION: 3 LARGE STAT CARDS ================= -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter-desktop">
+<!-- Card 1: Naive Cost -->
+<div class="bg-surface-container-lowest border border-on-background p-6 shadow-[3px_3px_0px_#0f1115] relative flex flex-col justify-between">
+<svg class="crosshair-corner crosshair-tl" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<svg class="crosshair-corner crosshair-tr" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-mono-caps text-label-mono-caps text-tertiary uppercase">BENCHMARK ESTIMATE</span>
+<span class="font-label-mono-caps text-[10px] text-error font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> UNPROTECTED
+            </span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-background mt-2">Naive Cost</h4>
+</div>
+<div class="my-5">
+<div id="naive-cost" class="font-data-metric-lg text-data-metric-lg text-on-background tracking-tight leading-none">
+            --
+          </div>
+</div>
+<div class="pt-3 border-t border-on-background/20 flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-tertiary">Unhedged Spot Market Exposure</span>
+<span class="material-symbols-outlined text-tertiary text-lg" data-icon="trending_up">trending_up</span>
+</div>
+</div>
+<!-- Card 2: Model Cost -->
+<div class="bg-surface-container-lowest border border-on-background p-6 shadow-[3px_3px_0px_#0f1115] relative flex flex-col justify-between">
+<svg class="crosshair-corner crosshair-tl" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<svg class="crosshair-corner crosshair-tr" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-mono-caps text-label-mono-caps text-tertiary uppercase">AI CONTRACT EXECUTION</span>
+<span class="font-label-mono-caps text-[10px] text-primary font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container border border-on-background"></span> SYNCHRONIZED
+            </span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-background mt-2">Model Cost</h4>
+</div>
+<div class="my-5">
+<div id="model-cost" class="font-data-metric-lg text-data-metric-lg text-on-background tracking-tight leading-none">
+            --
+          </div>
+</div>
+<div class="pt-3 border-t border-on-background/20 flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-tertiary">Algorithm Optimized Chartering</span>
+<span class="material-symbols-outlined text-primary text-lg" data-icon="auto_graph">auto_graph</span>
+</div>
+</div>
+<!-- Card 3: Estimated Savings -->
+<div class="bg-surface-container-lowest border-2 border-on-background p-6 shadow-[4px_4px_0px_#0f1115] relative flex flex-col justify-between">
+<svg class="crosshair-corner crosshair-tl" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<svg class="crosshair-corner crosshair-tr" viewbox="0 0 9 9"><path d="M0 4.5h9M4.5 0v9" stroke="#0f1115" stroke-width="1.5"></path></svg>
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-mono-caps text-label-mono-caps text-on-background uppercase font-bold">PROJECTED ARBITRAGE</span>
+<!-- Bold Lime-Green Badge -->
+<span id="savings-pct-badge" class="bg-primary-container text-on-background border border-on-background font-label-mono-caps text-label-mono-caps px-2.5 py-1 font-bold rounded-full">
+              -- ALPHA SAVED
+            </span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-background mt-2">Estimated Savings</h4>
+</div>
+<div class="my-5">
+<div class="font-data-metric-lg text-data-metric-lg text-on-background tracking-tight leading-none flex items-baseline gap-2">
+<span id="savings-inr">₹--</span>
+<span class="font-label-mono-caps text-label-mono-caps text-primary font-bold">NET INR</span>
+</div>
+</div>
+<div class="pt-3 border-t border-on-background/20 flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-background font-semibold">Total Projected Alpha vs. Continuous Spot</span>
+<span class="material-symbols-outlined text-on-background text-lg" data-icon="savings">savings</span>
+</div>
+</div>
+</section>
+<!-- FOOTER TECHNICAL BAR -->
+<footer class="mt-12 py-6 border-t border-on-background flex flex-col md:flex-row justify-between items-center gap-4 text-tertiary">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-sm text-on-background font-bold">CARGOCAST</span>
+<span class="text-xs">|</span>
+<span class="font-label-mono-caps text-[10px]">INDEX SPECIFICATION: SCFI-2024-Q4 // MARITIME RISK ARCHITECTURE</span>
+</div>
+<div class="flex items-center gap-6 font-label-mono-caps text-[10px]">
+<span>LATENCY: 42MS</span>
+<span>NODE: PACIFIC-WEST-01</span>
+<span class="text-on-background font-bold">TERMINAL: ONLINE ✦</span>
+</div>
+</footer>
+</main>
+<script>
+  const API_BASE = "http://127.0.0.1:8000";
+  const LIME = "#c4e538";
+  const BLACK = "#0f1115";
+
+  let chart;
+  let debounceTimer;
+
+  function fmtUSD(v) {
+    return "$" + Number(v).toLocaleString("en-US", { maximumFractionDigits: 0 });
+  }
+  function fmtINR(v) {
+    return "₹" + Number(v).toLocaleString("en-IN", { maximumFractionDigits: 0 });
+  }
+
+  function renderChart(dates, forecast, lower, upper) {
+    const ctx = document.getElementById("forecastChart").getContext("2d");
+    const data = {
+      labels: dates,
+      datasets: [
+        {
+          label: "Upper Band",
+          data: upper,
+          borderColor: "transparent",
+          backgroundColor: "rgba(196,229,56,0.25)",
+          pointRadius: 0,
+          fill: "+1",
+          tension: 0.35,
+        },
+        {
+          label: "Lower Band",
+          data: lower,
+          borderColor: "transparent",
+          backgroundColor: "rgba(196,229,56,0.25)",
+          pointRadius: 0,
+          fill: false,
+          tension: 0.35,
+        },
+        {
+          label: "Forecast (USD/tonne)",
+          data: forecast,
+          borderColor: LIME,
+          borderWidth: 3,
+          backgroundColor: LIME,
+          pointRadius: 0,
+          tension: 0.35,
+          fill: false,
+        },
+      ],
+    };
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: BLACK,
+          titleFont: { family: "JetBrains Mono" },
+          bodyFont: { family: "JetBrains Mono" },
+        },
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: "#5b5e67", font: { family: "JetBrains Mono", size: 10 }, maxTicksLimit: 8 },
+        },
+        y: {
+          grid: { color: "#e1e4e8", borderDash: [3, 3] },
+          ticks: { color: "#767963", font: { family: "JetBrains Mono", size: 10 } },
+        },
+      },
+    };
+
+    if (chart) {
+      chart.data = data;
+      chart.update();
+    } else {
+      chart = new Chart(ctx, { type: "line", data, options });
+    }
+  }
+
+  function renderRecommendation(rec) {
+    document.getElementById("rec-headline").textContent =
+      rec.charter_type.toUpperCase() + " — " + rec.timing.toUpperCase();
+    document.getElementById("rec-sentiment").textContent =
+      "• " + (rec.trend_pct > 0 ? "BULLISH" : "BEARISH");
+    document.getElementById("rec-reason").textContent = rec.reason;
+    document.getElementById("rec-trend").textContent =
+      "Trend " + (rec.trend_pct > 0 ? "+" : "") + rec.trend_pct + "%";
+    document.getElementById("rec-risk").textContent =
+      "Risk " + Math.round(rec.disruption_score * 100) + "%";
+  }
+
+  function renderSavings(savings) {
+    document.getElementById("naive-cost").textContent = fmtUSD(savings.naive_cost_usd);
+    document.getElementById("model-cost").textContent = fmtUSD(savings.model_cost_usd);
+    document.getElementById("savings-inr").textContent = fmtINR(savings.savings_inr);
+    document.getElementById("savings-pct-badge").textContent =
+      "+" + savings.savings_pct + "% ALPHA SAVED";
+  }
+
+  async function loadInitial() {
+    const forecastRes = await fetch(`${API_BASE}/api/forecast?horizon_days=60`);
+    const forecast = await forecastRes.json();
+    renderChart(forecast.dates, forecast.forecast, forecast.lower, forecast.upper);
+
+    const recRes = await fetch(`${API_BASE}/api/recommendation?horizon_days=60`);
+    const rec = await recRes.json();
+    renderRecommendation(rec);
+
+    // initial savings from the same (no-shock) scenario
+    await runScenario();
+  }
+
+  async function runScenario() {
+    const fuel = Number(document.getElementById("fuel-slider").value);
+    const delay = Number(document.getElementById("delay-slider").value);
+    const demand = Number(document.getElementById("demand-slider").value);
+
+    document.getElementById("fuel-value").textContent =
+      (fuel >= 0 ? "+" : "") + fuel + "%";
+    document.getElementById("delay-value").textContent = delay + " Days";
+    document.getElementById("demand-value").textContent =
+      (demand >= 0 ? "+" : "") + demand + "%";
+
+    const res = await fetch(`${API_BASE}/api/scenario?horizon_days=60`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fuel_pct_change: fuel,
+        delay_days: delay,
+        demand_shock_pct: demand,
+      }),
+    });
+    const data = await res.json();
+
+    renderChart(
+      data.scenario_forecast.dates,
+      data.scenario_forecast.forecast,
+      data.scenario_forecast.lower,
+      data.scenario_forecast.upper
+    );
+    renderRecommendation(data.recommendation);
+    renderSavings(data.savings);
+  }
+
+  function onSliderChange() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(runScenario, 300);
+  }
+
+  document.getElementById("fuel-slider").addEventListener("input", onSliderChange);
+  document.getElementById("delay-slider").addEventListener("input", onSliderChange);
+  document.getElementById("demand-slider").addEventListener("input", onSliderChange);
+
+  loadInitial();
+</script>
+</body></html>

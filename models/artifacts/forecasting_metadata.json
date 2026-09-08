@@ -1,0 +1,49 @@
+{
+  "pipeline": "CargoCast Forecasting",
+  "model": "XGBoost",
+  "xgb_params": {
+    "objective": "reg:squarederror",
+    "n_estimators": 500,
+    "learning_rate": 0.05,
+    "max_depth": 6,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "random_state": 42
+  },
+  "freight": {
+    "artifact": "models/artifacts/freight_xgb.joblib",
+    "feature_count": 244,
+    "metrics": {
+      "validation": {
+        "r2": 0.9140677355096442,
+        "mae": 1.1541398324629693,
+        "rmse": 1.875275345450062,
+        "n": 93
+      },
+      "test": {
+        "r2": 0.8965390388992116,
+        "mae": 1.30269351321974,
+        "rmse": 2.1057877669778504,
+        "n": 93
+      }
+    }
+  },
+  "demand": {
+    "artifact": "models/artifacts/demand_xgb.joblib",
+    "feature_count": 244,
+    "metrics": {
+      "validation": {
+        "r2": 0.9969769950526683,
+        "mae": 1465.0650745967755,
+        "rmse": 2514.3667991846332,
+        "n": 93
+      },
+      "test": {
+        "r2": 0.9986903233697889,
+        "mae": 1010.3962753696258,
+        "rmse": 1883.7343994684586,
+        "n": 93
+      }
+    }
+  }
+}

@@ -1,0 +1,261 @@
+{
+  "as_of_date": "2026-09-02",
+  "base_bdi": 1850,
+  "base_bci": 2920,
+  "base_bpi": 1680,
+  "base_bsi": 1240,
+  "base_bunker_vlsfo_usd_mt": 635.0,
+  "base_inr_usd_fx_rate": 87.5,
+  "routes": [
+    {
+      "route_id": "ROUTE_AU_PRT_CAPE",
+      "origin_port_id": "AU_HPT",
+      "discharge_port_id": "IN_PRT",
+      "vessel_class": "Capesize",
+      "commodity": "Hard Coking Coal",
+      "current_spot_rate_usd_mt": 15.4,
+      "current_time_charter_usd_day": 24500,
+      "forecast_horizons": [
+        {
+          "horizon_days": 7,
+          "q10": 15.2,
+          "q50": 15.65,
+          "q90": 16.3,
+          "tce_usd_day": 24900
+        },
+        {
+          "horizon_days": 14,
+          "q10": 15.5,
+          "q50": 16.1,
+          "q90": 17.2,
+          "tce_usd_day": 25600
+        },
+        {
+          "horizon_days": 30,
+          "q10": 16.0,
+          "q50": 17.35,
+          "q90": 19.1,
+          "tce_usd_day": 27800
+        },
+        {
+          "horizon_days": 60,
+          "q10": 16.8,
+          "q50": 18.5,
+          "q90": 20.8,
+          "tce_usd_day": 29500
+        },
+        {
+          "horizon_days": 90,
+          "q10": 17.2,
+          "q50": 19.4,
+          "q90": 22.5,
+          "tce_usd_day": 31000
+        }
+      ],
+      "trend_slope_usd_day": 0.044,
+      "trend_direction": "UPWARD",
+      "volatility_regime": "MODERATE_TO_HIGH",
+      "cargo_demand_monthly_mt": 650000
+    },
+    {
+      "route_id": "ROUTE_AU_VTZ_CAPE",
+      "origin_port_id": "AU_GLT",
+      "discharge_port_id": "IN_VTZ_OUTER",
+      "vessel_class": "Capesize",
+      "commodity": "Semi-Soft Coking Coal",
+      "current_spot_rate_usd_mt": 14.8,
+      "current_time_charter_usd_day": 23800,
+      "forecast_horizons": [
+        {
+          "horizon_days": 7,
+          "q10": 14.6,
+          "q50": 15.0,
+          "q90": 15.7,
+          "tce_usd_day": 24200
+        },
+        {
+          "horizon_days": 14,
+          "q10": 14.9,
+          "q50": 15.45,
+          "q90": 16.4,
+          "tce_usd_day": 24900
+        },
+        {
+          "horizon_days": 30,
+          "q10": 15.3,
+          "q50": 16.5,
+          "q90": 18.2,
+          "tce_usd_day": 26700
+        },
+        {
+          "horizon_days": 60,
+          "q10": 15.9,
+          "q50": 17.4,
+          "q90": 19.5,
+          "tce_usd_day": 28200
+        },
+        {
+          "horizon_days": 90,
+          "q10": 16.3,
+          "q50": 18.1,
+          "q90": 20.8,
+          "tce_usd_day": 29400
+        }
+      ],
+      "trend_slope_usd_day": 0.037,
+      "trend_direction": "UPWARD",
+      "volatility_regime": "MODERATE",
+      "cargo_demand_monthly_mt": 420000
+    },
+    {
+      "route_id": "ROUTE_US_DHM_CAPE",
+      "origin_port_id": "US_ORF",
+      "discharge_port_id": "IN_DHM",
+      "vessel_class": "Capesize",
+      "commodity": "Low Vol Coking Coal",
+      "current_spot_rate_usd_mt": 31.5,
+      "current_time_charter_usd_day": 26000,
+      "forecast_horizons": [
+        {
+          "horizon_days": 7,
+          "q10": 30.8,
+          "q50": 31.2,
+          "q90": 32.1,
+          "tce_usd_day": 25800
+        },
+        {
+          "horizon_days": 14,
+          "q10": 30.2,
+          "q50": 30.8,
+          "q90": 31.8,
+          "tce_usd_day": 25200
+        },
+        {
+          "horizon_days": 30,
+          "q10": 29.5,
+          "q50": 30.1,
+          "q90": 31.4,
+          "tce_usd_day": 24500
+        },
+        {
+          "horizon_days": 60,
+          "q10": 28.8,
+          "q50": 29.4,
+          "q90": 30.9,
+          "tce_usd_day": 23800
+        },
+        {
+          "horizon_days": 90,
+          "q10": 28.2,
+          "q50": 28.9,
+          "q90": 30.5,
+          "tce_usd_day": 23200
+        }
+      ],
+      "trend_slope_usd_day": -0.029,
+      "trend_direction": "DOWNWARD",
+      "volatility_regime": "LOW",
+      "cargo_demand_monthly_mt": 280000
+    },
+    {
+      "route_id": "ROUTE_ID_HLD_HANDY",
+      "origin_port_id": "ID_TBN",
+      "discharge_port_id": "IN_HLD",
+      "vessel_class": "Handysize",
+      "commodity": "Thermal Coal",
+      "current_spot_rate_usd_mt": 12.2,
+      "current_time_charter_usd_day": 13500,
+      "forecast_horizons": [
+        {
+          "horizon_days": 7,
+          "q10": 12.0,
+          "q50": 12.3,
+          "q90": 12.8,
+          "tce_usd_day": 13600
+        },
+        {
+          "horizon_days": 14,
+          "q10": 12.1,
+          "q50": 12.45,
+          "q90": 13.0,
+          "tce_usd_day": 13800
+        },
+        {
+          "horizon_days": 30,
+          "q10": 12.2,
+          "q50": 12.6,
+          "q90": 13.3,
+          "tce_usd_day": 14000
+        },
+        {
+          "horizon_days": 60,
+          "q10": 12.0,
+          "q50": 12.5,
+          "q90": 13.2,
+          "tce_usd_day": 13900
+        },
+        {
+          "horizon_days": 90,
+          "q10": 11.9,
+          "q50": 12.4,
+          "q90": 13.1,
+          "tce_usd_day": 13700
+        }
+      ],
+      "trend_slope_usd_day": 0.002,
+      "trend_direction": "SIDEWAYS",
+      "volatility_regime": "LOW",
+      "cargo_demand_monthly_mt": 350000
+    },
+    {
+      "route_id": "ROUTE_MZ_GNR_SUPRA",
+      "origin_port_id": "MZ_MPM",
+      "discharge_port_id": "IN_GNR",
+      "vessel_class": "Supramax",
+      "commodity": "Coking Coal",
+      "current_spot_rate_usd_mt": 18.5,
+      "current_time_charter_usd_day": 17200,
+      "forecast_horizons": [
+        {
+          "horizon_days": 7,
+          "q10": 18.2,
+          "q50": 18.6,
+          "q90": 19.3,
+          "tce_usd_day": 17400
+        },
+        {
+          "horizon_days": 14,
+          "q10": 18.5,
+          "q50": 19.1,
+          "q90": 20.0,
+          "tce_usd_day": 17900
+        },
+        {
+          "horizon_days": 30,
+          "q10": 19.0,
+          "q50": 20.2,
+          "q90": 21.8,
+          "tce_usd_day": 19100
+        },
+        {
+          "horizon_days": 60,
+          "q10": 19.8,
+          "q50": 21.5,
+          "q90": 23.4,
+          "tce_usd_day": 20500
+        },
+        {
+          "horizon_days": 90,
+          "q10": 20.5,
+          "q50": 22.4,
+          "q90": 24.8,
+          "tce_usd_day": 21600
+        }
+      ],
+      "trend_slope_usd_day": 0.043,
+      "trend_direction": "UPWARD",
+      "volatility_regime": "HIGH",
+      "cargo_demand_monthly_mt": 200000
+    }
+  ]
+}

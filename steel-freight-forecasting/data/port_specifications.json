@@ -1,0 +1,394 @@
+{
+  "indian_discharge_ports": [
+    {
+      "port_id": "IN_PRT",
+      "port_name": "Paradip Port",
+      "state": "Odisha",
+      "coast": "East Coast India",
+      "port_type": "discharge",
+      "max_draft_meters": 17.1,
+      "max_loa_meters": 260.0,
+      "max_beam_meters": 45.0,
+      "permissible_vessel_types": [
+        "Handysize",
+        "Supramax",
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_discharge_rate_mt": 35000,
+      "tidal_restriction": false,
+      "requires_lighterage_for_cape": false,
+      "berth_count_dry_bulk": 6,
+      "typical_waiting_time_days": 3.2,
+      "demurrage_rate_usd_day": 22000,
+      "notes": "Mechanized coal berth can handle Capesize vessels with up to 17.1m draft. Key hub for SAIL Rourkela and Bokaro."
+    },
+    {
+      "port_id": "IN_VTZ_OUTER",
+      "port_name": "Visakhapatnam Outer Harbour (Vizag Outer)",
+      "state": "Andhra Pradesh",
+      "coast": "East Coast India",
+      "port_type": "discharge",
+      "max_draft_meters": 18.1,
+      "max_loa_meters": 300.0,
+      "max_beam_meters": 50.0,
+      "permissible_vessel_types": [
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_discharge_rate_mt": 40000,
+      "tidal_restriction": false,
+      "requires_lighterage_for_cape": false,
+      "berth_count_dry_bulk": 4,
+      "typical_waiting_time_days": 2.5,
+      "demurrage_rate_usd_day": 25000,
+      "notes": "Deep-water outer harbor capable of handling Capesize vessels up to 200,000 DWT. Directly feeds RINL Vizag Steel Plant."
+    },
+    {
+      "port_id": "IN_VTZ_INNER",
+      "port_name": "Visakhapatnam Inner Harbour (Vizag Inner)",
+      "state": "Andhra Pradesh",
+      "coast": "East Coast India",
+      "port_type": "discharge",
+      "max_draft_meters": 11.0,
+      "max_loa_meters": 195.0,
+      "max_beam_meters": 32.2,
+      "permissible_vessel_types": [
+        "Handysize",
+        "Supramax"
+      ],
+      "daily_discharge_rate_mt": 18000,
+      "tidal_restriction": true,
+      "requires_lighterage_for_cape": true,
+      "berth_count_dry_bulk": 5,
+      "typical_waiting_time_days": 2.0,
+      "demurrage_rate_usd_day": 16000,
+      "notes": "Severely draft-restricted (11m). Panamax cannot enter fully laden. Supramax and Handysize primary."
+    },
+    {
+      "port_id": "IN_GNR",
+      "port_name": "Gangavaram Port",
+      "state": "Andhra Pradesh",
+      "coast": "East Coast India",
+      "port_type": "discharge",
+      "max_draft_meters": 19.5,
+      "max_loa_meters": 320.0,
+      "max_beam_meters": 52.0,
+      "permissible_vessel_types": [
+        "Handysize",
+        "Supramax",
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_discharge_rate_mt": 45000,
+      "tidal_restriction": false,
+      "requires_lighterage_for_cape": false,
+      "berth_count_dry_bulk": 5,
+      "typical_waiting_time_days": 1.8,
+      "demurrage_rate_usd_day": 26000,
+      "notes": "All-weather deep-water private port capable of handling fully laden Capesize. High discharge productivity."
+    },
+    {
+      "port_id": "IN_DHM",
+      "port_name": "Dhamra Port",
+      "state": "Odisha",
+      "coast": "East Coast India",
+      "port_type": "discharge",
+      "max_draft_meters": 18.0,
+      "max_loa_meters": 315.0,
+      "max_beam_meters": 48.0,
+      "permissible_vessel_types": [
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_discharge_rate_mt": 42000,
+      "tidal_restriction": false,
+      "requires_lighterage_for_cape": false,
+      "berth_count_dry_bulk": 3,
+      "typical_waiting_time_days": 2.1,
+      "demurrage_rate_usd_day": 24000,
+      "notes": "Deep draught all-weather port in Bhadrak district. Ideal for Capesize coking coal imports destined for Kalinganagar steel hub."
+    },
+    {
+      "port_id": "IN_GOP",
+      "port_name": "Gopalpur Port",
+      "state": "Odisha",
+      "coast": "East Coast India",
+      "port_type": "discharge",
+      "max_draft_meters": 14.5,
+      "max_loa_meters": 230.0,
+      "max_beam_meters": 35.0,
+      "permissible_vessel_types": [
+        "Handysize",
+        "Supramax",
+        "Panamax"
+      ],
+      "daily_discharge_rate_mt": 22000,
+      "tidal_restriction": false,
+      "requires_lighterage_for_cape": true,
+      "berth_count_dry_bulk": 2,
+      "typical_waiting_time_days": 2.8,
+      "demurrage_rate_usd_day": 18000,
+      "notes": "Suitable for baby Panamax and Supramax vessels."
+    },
+    {
+      "port_id": "IN_HLD",
+      "port_name": "Haldia Dock Complex",
+      "state": "West Bengal",
+      "coast": "East Coast India",
+      "port_type": "discharge",
+      "max_draft_meters": 8.5,
+      "max_loa_meters": 230.0,
+      "max_beam_meters": 32.26,
+      "permissible_vessel_types": [
+        "Handysize"
+      ],
+      "daily_discharge_rate_mt": 14000,
+      "tidal_restriction": true,
+      "requires_lighterage_for_cape": true,
+      "berth_count_dry_bulk": 4,
+      "typical_waiting_time_days": 4.5,
+      "demurrage_rate_usd_day": 16000,
+      "lighterage_anchorage_id": "IN_SGR_ANCH",
+      "notes": "Riverine port in Hooghly river with severe draught constraints (7.5m - 8.5m tidal). Capesize/Panamax vessels MUST undergo two-stage lighterage at Sandheads/Sagar before docking."
+    },
+    {
+      "port_id": "IN_SGR_ANCH",
+      "port_name": "Sagar Roads & Sandheads Anchorage",
+      "state": "West Bengal",
+      "coast": "East Coast India",
+      "port_type": "transshipment_lighterage",
+      "max_draft_meters": 20.0,
+      "max_loa_meters": 330.0,
+      "max_beam_meters": 55.0,
+      "permissible_vessel_types": [
+        "Capesize",
+        "Panamax"
+      ],
+      "daily_discharge_rate_mt": 20000,
+      "tidal_restriction": false,
+      "requires_lighterage_for_cape": false,
+      "berth_count_dry_bulk": 3,
+      "typical_waiting_time_days": 1.5,
+      "demurrage_rate_usd_day": 26000,
+      "lighterage_cost_usd_mt": 5.75,
+      "notes": "Open-sea deep-water lightering anchorage in the Bay of Bengal for discharging Capesize vessels into daughter barges/coastal vessels for Haldia/Kolkata entry."
+    }
+  ],
+  "global_loading_ports": [
+    {
+      "port_id": "AU_HPT",
+      "port_name": "Hay Point (Dalrymple Bay)",
+      "country": "Australia",
+      "region": "Queensland",
+      "port_type": "loading",
+      "max_draft_meters": 19.0,
+      "max_loa_meters": 340.0,
+      "max_beam_meters": 55.0,
+      "permissible_vessel_types": [
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_loading_rate_mt": 65000,
+      "commodity_focus": [
+        "Hard Coking Coal",
+        "PCI Coal"
+      ],
+      "typical_sailing_days_to_east_coast_india": 14,
+      "sailing_distance_nm": 4900
+    },
+    {
+      "port_id": "AU_GLT",
+      "port_name": "Gladstone (RG Tanna / Barney Point)",
+      "country": "Australia",
+      "region": "Queensland",
+      "port_type": "loading",
+      "max_draft_meters": 17.5,
+      "max_loa_meters": 320.0,
+      "max_beam_meters": 50.0,
+      "permissible_vessel_types": [
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_loading_rate_mt": 55000,
+      "commodity_focus": [
+        "Semi-Soft Coking Coal",
+        "Thermal Coal"
+      ],
+      "typical_sailing_days_to_east_coast_india": 15,
+      "sailing_distance_nm": 5200
+    },
+    {
+      "port_id": "AU_NCL",
+      "port_name": "Newcastle (PWCS / NCIG)",
+      "country": "Australia",
+      "region": "New South Wales",
+      "port_type": "loading",
+      "max_draft_meters": 15.2,
+      "max_loa_meters": 300.0,
+      "max_beam_meters": 47.0,
+      "permissible_vessel_types": [
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_loading_rate_mt": 50000,
+      "commodity_focus": [
+        "High-Ash Thermal Coal",
+        "Semi-Hard Coking Coal"
+      ],
+      "typical_sailing_days_to_east_coast_india": 17,
+      "sailing_distance_nm": 5600
+    },
+    {
+      "port_id": "US_ORF",
+      "port_name": "Hampton Roads / Norfolk (Pier 6 / Lamberts Pt)",
+      "country": "USA",
+      "region": "US East Coast",
+      "port_type": "loading",
+      "max_draft_meters": 15.2,
+      "max_loa_meters": 310.0,
+      "max_beam_meters": 48.0,
+      "permissible_vessel_types": [
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_loading_rate_mt": 45000,
+      "commodity_focus": [
+        "Low Vol Coking Coal",
+        "High Vol A/B Coking Coal"
+      ],
+      "typical_sailing_days_to_east_coast_india": 32,
+      "sailing_distance_nm": 9800
+    },
+    {
+      "port_id": "MZ_MPM",
+      "port_name": "Maputo (Matola Coal Terminal)",
+      "country": "Mozambique",
+      "region": "East Africa",
+      "port_type": "loading",
+      "max_draft_meters": 13.5,
+      "max_loa_meters": 245.0,
+      "max_beam_meters": 36.0,
+      "permissible_vessel_types": [
+        "Handysize",
+        "Supramax",
+        "Panamax"
+      ],
+      "daily_loading_rate_mt": 25000,
+      "commodity_focus": [
+        "Coking Coal",
+        "Anthracite"
+      ],
+      "typical_sailing_days_to_east_coast_india": 13,
+      "sailing_distance_nm": 4200
+    },
+    {
+      "port_id": "MZ_BEI",
+      "port_name": "Beira",
+      "country": "Mozambique",
+      "region": "East Africa",
+      "port_type": "loading",
+      "max_draft_meters": 9.2,
+      "max_loa_meters": 200.0,
+      "max_beam_meters": 32.0,
+      "permissible_vessel_types": [
+        "Handysize",
+        "Supramax"
+      ],
+      "daily_loading_rate_mt": 12000,
+      "commodity_focus": [
+        "Coking Coal"
+      ],
+      "typical_sailing_days_to_east_coast_india": 14,
+      "sailing_distance_nm": 4400
+    },
+    {
+      "port_id": "ID_TBN",
+      "port_name": "Taboneo Anchorage (South Kalimantan)",
+      "country": "Indonesia",
+      "region": "Southeast Asia",
+      "port_type": "loading",
+      "max_draft_meters": 14.5,
+      "max_loa_meters": 250.0,
+      "max_beam_meters": 38.0,
+      "permissible_vessel_types": [
+        "Handysize",
+        "Supramax",
+        "Panamax"
+      ],
+      "daily_loading_rate_mt": 22000,
+      "commodity_focus": [
+        "Sub-bituminous Coal",
+        "Thermal Coal",
+        "Semi-soft Coal"
+      ],
+      "typical_sailing_days_to_east_coast_india": 7,
+      "sailing_distance_nm": 2300
+    },
+    {
+      "port_id": "ID_SMD",
+      "port_name": "Samarinda / Muara Berau (East Kalimantan)",
+      "country": "Indonesia",
+      "region": "Southeast Asia",
+      "port_type": "loading",
+      "max_draft_meters": 14.0,
+      "max_loa_meters": 250.0,
+      "max_beam_meters": 38.0,
+      "permissible_vessel_types": [
+        "Handysize",
+        "Supramax",
+        "Panamax"
+      ],
+      "daily_loading_rate_mt": 20000,
+      "commodity_focus": [
+        "Thermal Coal",
+        "PCI Coal"
+      ],
+      "typical_sailing_days_to_east_coast_india": 8,
+      "sailing_distance_nm": 2500
+    },
+    {
+      "port_id": "RU_TMN",
+      "port_name": "Taman (Black Sea)",
+      "country": "Russia",
+      "region": "Black Sea / Europe",
+      "port_type": "loading",
+      "max_draft_meters": 17.5,
+      "max_loa_meters": 300.0,
+      "max_beam_meters": 50.0,
+      "permissible_vessel_types": [
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_loading_rate_mt": 40000,
+      "commodity_focus": [
+        "PCI Coal",
+        "Anthracite",
+        "Thermal Coal"
+      ],
+      "typical_sailing_days_to_east_coast_india": 22,
+      "sailing_distance_nm": 6200
+    },
+    {
+      "port_id": "RU_VOS",
+      "port_name": "Vostochny Port (Far East)",
+      "country": "Russia",
+      "region": "Pacific Russia",
+      "port_type": "loading",
+      "max_draft_meters": 16.5,
+      "max_loa_meters": 300.0,
+      "max_beam_meters": 48.0,
+      "permissible_vessel_types": [
+        "Panamax",
+        "Capesize"
+      ],
+      "daily_loading_rate_mt": 50000,
+      "commodity_focus": [
+        "Hard Coking Coal",
+        "Anthracite"
+      ],
+      "typical_sailing_days_to_east_coast_india": 16,
+      "sailing_distance_nm": 5100
+    }
+  ]
+}

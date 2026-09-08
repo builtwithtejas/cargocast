@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CARGOCAST — Scenario Simulator (Detail View)</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#c6c9af",
+            "tertiary": "#5b5e67",
+            "outline": "#767963",
+            "inverse-surface": "#2e3132",
+            "background": "#f8f9fa",
+            "surface-container": "#edeeef",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#5a5d66",
+            "on-background": "#191c1d",
+            "on-surface": "#191c1d",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b4d425",
+            "surface-container-high": "#e7e8e9",
+            "surface": "#f8f9fa",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#3f4c00",
+            "on-primary-fixed": "#181e00",
+            "primary-container": "#c4e538",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed-variant": "#43474f",
+            "on-primary-container": "#536400",
+            "surface-container-highest": "#e1e3e4",
+            "inverse-on-surface": "#f0f1f2",
+            "on-surface-variant": "#454935",
+            "primary": "#546500",
+            "secondary": "#5d5e63",
+            "on-secondary-fixed-variant": "#45474b",
+            "primary-fixed-dim": "#b4d425",
+            "on-primary": "#ffffff",
+            "tertiary-fixed-dim": "#c3c6d0",
+            "surface-bright": "#f8f9fa",
+            "on-secondary-fixed": "#1a1c20",
+            "on-secondary-container": "#636469",
+            "secondary-fixed-dim": "#c6c6cc",
+            "tertiary-container": "#d4d7e1",
+            "tertiary-fixed": "#dfe2ec",
+            "surface-container-low": "#f3f4f5",
+            "secondary-container": "#e2e2e8",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#546500",
+            "surface-dim": "#d9dadb",
+            "on-tertiary-fixed": "#181c23",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#cff143",
+            "secondary-fixed": "#e2e2e8",
+            "surface-variant": "#e1e3e4"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-2xl": "3rem",
+            "header-height": "4.25rem",
+            "space-sm": "0.75rem",
+            "gutter-desktop": "1.5rem",
+            "space-xs": "0.5rem",
+            "space-md": "1rem",
+            "space-xl": "2rem",
+            "margin-desktop": "2rem",
+            "space-2xs": "0.25rem",
+            "space-3xl": "4rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Space Grotesk"],
+            "display-xl": ["Space Grotesk"],
+            "data-metric-lg": ["Space Grotesk"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-lg": ["Space Grotesk"],
+            "data-metric-sm": ["JetBrains Mono"],
+            "display-xl-mobile": ["Space Grotesk"],
+            "headline-sm": ["Space Grotesk"],
+            "label-mono-caps": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "body-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-xl": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "data-metric-lg": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "headline-lg": ["36px", { "lineHeight": "42px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "data-metric-sm": ["18px", { "lineHeight": "22px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-xl-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "label-mono-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .hairline-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(15, 17, 21, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 17, 21, 0.05) 1px, transparent 1px);
+    }
+    .corner-cross {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      pointer-events: none;
+    }
+    .corner-cross::before, .corner-cross::after {
+      content: '';
+      position: absolute;
+      background-color: #0f1115;
+    }
+    .corner-cross::before {
+      top: 4px;
+      left: 0;
+      width: 9px;
+      height: 1px;
+    }
+    .corner-cross::after {
+      top: 0;
+      left: 4px;
+      width: 1px;
+      height: 9px;
+    }
+    .corner-cross-light::before, .corner-cross-light::after {
+      background-color: #c4e538;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    input[type=range]:focus {
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 9999px;
+      background: #c4e538;
+      border: 2px solid #0f1115;
+      cursor: pointer;
+      margin-top: -7px;
+      box-shadow: 2px 2px 0px #0f1115;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 4px;
+      cursor: pointer;
+      background: #2e3132;
+      border: 1px solid #767963;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen hairline-grid selection:bg-primary-container selection:text-on-primary-fixed">
+<!-- TOP APP BAR (Shared Component JSON Blueprint & Conflict Rules applied) -->
+<header class="sticky top-0 z-50 w-full bg-inverse-surface dark:bg-inverse-surface border-b border-outline dark:border-outline">
+<div class="flex justify-between items-center w-full px-margin-desktop h-header-height max-w-full">
+<!-- Brand Logo Section -->
+<div class="flex items-center gap-3">
+<a class="text-headline-md font-headline-md font-bold tracking-tight text-primary-container dark:text-primary-container flex items-center gap-1.5 hover:opacity-90" href="#">
+<span>CARGOCAST</span>
+<span class="text-primary-container text-lg font-mono leading-none select-none">✦</span>
+</a>
+<div class="hidden lg:flex items-center ml-4 pl-4 border-l border-outline/50 gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="text-label-mono-caps font-label-mono-caps text-secondary-fixed-dim">FEED: SCFI 2,140.8 ▲ +4.2%</span>
+</div>
+</div>
+<!-- Navigation Links (Active: Scenarios) -->
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-secondary-fixed-dim dark:text-secondary-fixed-dim font-label-mono-caps text-label-mono-caps hover:text-surface-container-lowest dark:hover:text-surface-container-lowest pb-1" href="#">
+          Dashboard
+        </a>
+<a class="text-secondary-fixed-dim dark:text-secondary-fixed-dim font-label-mono-caps text-label-mono-caps hover:text-surface-container-lowest dark:hover:text-surface-container-lowest pb-1" href="#">
+          Forecast
+        </a>
+<a class="text-primary-container dark:text-primary-container border-b-2 border-primary-container font-label-mono-caps text-label-mono-caps pb-1" href="#">
+          Scenarios
+        </a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-on-surface border border-outline text-primary-container font-label-mono-caps text-label-mono-caps">
+<span class="material-symbols-outlined text-sm text-primary-container" style="font-variation-settings: 'FILL' 1;">sensors</span>
+<span>VESSEL AI ACTIVE</span>
+</div>
+<div class="flex items-center gap-2 border-l border-outline/60 pl-3">
+<button class="text-secondary-fixed-dim hover:text-surface-container-lowest dark:hover:text-surface-container-lowest transition-colors p-1" title="Terminal">
+<span class="material-symbols-outlined text-lg" data-icon="terminal">terminal</span>
+</button>
+<button class="relative text-secondary-fixed-dim hover:text-surface-container-lowest dark:hover:text-surface-container-lowest transition-colors p-1" title="Notifications">
+<span class="material-symbols-outlined text-lg" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-1.5 h-1.5 bg-primary-container rounded-full"></span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN EDITORIAL CONTENT CANVAS -->
+<main class="max-w-[1600px] mx-auto px-4 md:px-margin-desktop py-8">
+<!-- PAGE HEADER BLOCK (Editorial Brutalism) -->
+<div class="relative bg-surface-container-lowest border border-on-surface p-6 md:p-8 mb-8">
+<!-- Structural Corner Crosses -->
+<div class="corner-cross -top-[5px] -left-[5px]"></div>
+<div class="corner-cross -top-[5px] -right-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -left-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -right-[5px]"></div>
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-label-mono-caps font-label-mono-caps text-primary tracking-wider">
+<span class="px-2 py-0.5 bg-inverse-surface text-primary-container">SYSTEM 03</span>
+<span>//</span>
+<span>MONTE CARLO STRESS TEST</span>
+<span class="text-on-surface">✦</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">
+            Scenario Simulator
+          </h1>
+<p class="text-body-md font-body-md text-tertiary max-w-2xl">
+            Real-time parametric stress testing: simulate geopolitical, climate, and supply-chain shocks against core vessel line forecasts.
+          </p>
+</div>
+<!-- Header Telemetry Pill Cluster -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-2 bg-surface-container-low border border-on-surface">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="memory">memory</span>
+<div class="text-left">
+<div class="text-[10px] font-label-mono-caps text-tertiary">SIMULATIONS RUN</div>
+<div class="text-data-metric-sm font-data-metric-sm text-on-surface leading-none">10,000</div>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-2 bg-surface-container-low border border-on-surface">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="calendar_month">calendar_month</span>
+<div class="text-left">
+<div class="text-[10px] font-label-mono-caps text-tertiary">BASELINE ANCHOR</div>
+<div class="text-data-metric-sm font-data-metric-sm text-on-surface leading-none">Dec 2024 Index</div>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-2 bg-surface-container-low border border-on-surface">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="bolt">bolt</span>
+<div class="text-left">
+<div class="text-[10px] font-label-mono-caps text-tertiary">SYSTEM LATENCY</div>
+<div class="text-data-metric-sm font-data-metric-sm text-on-surface leading-none">&lt;40ms</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- MAIN 2-COLUMN GRID (Left 38% vs Right 62%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-start">
+<!-- LEFT SIDE: Full vertical simulation parameter panel (38% -> lg:col-span-5) -->
+<section class="lg:col-span-5 bg-inverse-surface border border-outline relative p-6 space-y-6 shadow-[3px_3px_0px_#0f1115]">
+<!-- Corner Markers in Lime -->
+<div class="corner-cross corner-cross-light -top-[5px] -left-[5px]"></div>
+<div class="corner-cross corner-cross-light -top-[5px] -right-[5px]"></div>
+<div class="corner-cross corner-cross-light -bottom-[5px] -left-[5px]"></div>
+<div class="corner-cross corner-cross-light -bottom-[5px] -right-[5px]"></div>
+<!-- Panel Header -->
+<div class="flex items-center justify-between pb-4 border-b border-outline/50">
+<div class="flex items-center gap-2">
+<span class="text-primary-container text-sm">✦</span>
+<h2 class="text-headline-sm font-headline-sm text-surface-container-lowest tracking-tight">
+              SIMULATION PARAMETERS
+            </h2>
+</div>
+<button class="text-label-mono-caps font-label-mono-caps text-secondary-fixed-dim hover:text-primary-container transition-colors flex items-center gap-1 border border-outline px-2 py-1" id="reset-params">
+<span class="material-symbols-outlined text-xs" data-icon="refresh">refresh</span>
+            RESET
+          </button>
+</div>
+<!-- Sliders & Parametric Controls -->
+<div class="space-y-6">
+<!-- Control 1: Fuel Price Change -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="text-label-mono-caps font-label-mono-caps text-surface-container-highest flex items-center gap-1.5">
+<span>01</span>
+<span>FUEL PRICE CHANGE (%)</span>
+</label>
+<span id="sc-fuel-value" class="px-2 py-0.5 bg-on-surface border border-primary-container/40 text-primary-container font-label-mono-caps text-label-mono-caps">
+                +0.0%
+              </span>
+</div>
+<input class="w-full" id="sc-fuel-slider" max="60" min="-20" type="range" value="0"/>
+<div class="flex justify-between text-[10px] font-label-mono-caps text-secondary-fixed-dim">
+<span>-20% Bearish Refinement</span>
+<span>Baseline</span>
+<span>+60% Extreme Shock</span>
+</div>
+</div>
+<!-- Control 2: Port Delay Days -->
+<div class="space-y-2 pt-2 border-t border-outline/30">
+<div class="flex items-center justify-between">
+<label class="text-label-mono-caps font-label-mono-caps text-surface-container-highest flex items-center gap-1.5">
+<span>02</span>
+<span>PORT DELAY DAYS</span>
+</label>
+<span id="sc-delay-value" class="px-2 py-0.5 bg-on-surface border border-primary-container/40 text-primary-container font-label-mono-caps text-label-mono-caps">
+                0 Days
+              </span>
+</div>
+<input class="w-full" id="sc-delay-slider" max="21" min="0" step="0.5" type="range" value="0"/>
+<div class="flex justify-between text-[10px] font-label-mono-caps text-secondary-fixed-dim">
+<span>0.0d Clear</span>
+<span>+10d Heavy</span>
+<span>+21d Total Gridlock</span>
+</div>
+</div>
+<!-- Control 3: Demand Shock -->
+<div class="space-y-2 pt-2 border-t border-outline/30">
+<div class="flex items-center justify-between">
+<label class="text-label-mono-caps font-label-mono-caps text-surface-container-highest flex items-center gap-1.5">
+<span>03</span>
+<span>DEMAND SHOCK (%)</span>
+</label>
+<span id="sc-demand-value" class="px-2 py-0.5 bg-on-surface border border-primary-container/40 text-primary-container font-label-mono-caps text-label-mono-caps">
+                +0.0%
+              </span>
+</div>
+<input class="w-full" id="sc-demand-slider" max="30" min="-30" type="range" value="0"/>
+<div class="flex justify-between text-[10px] font-label-mono-caps text-secondary-fixed-dim">
+<span>-30% Contraction</span>
+<span>Neutral</span>
+<span>+30% Hyper-Consumption</span>
+</div>
+</div>
+<!-- Control 4: Geopolitical Canal Surcharge -->
+<div class="space-y-2 pt-2 border-t border-outline/30">
+<div class="flex items-center justify-between">
+<label class="text-label-mono-caps font-label-mono-caps text-surface-container-highest flex items-center gap-1.5">
+<span>04</span>
+<span>GEOPOLITICAL CANAL SURCHARGE</span>
+</label>
+<span class="px-2 py-0.5 bg-on-surface border border-primary-container/40 text-primary-container font-label-mono-caps text-label-mono-caps">
+                +$420/TEU
+              </span>
+</div>
+<input class="w-full" max="1200" min="0" step="10" type="range" value="420"/>
+<div class="flex justify-between text-[10px] font-label-mono-caps text-secondary-fixed-dim">
+<span>$0 Standard Transit</span>
+<span>+$600 Red Sea Tier</span>
+<span>+$1200 Blockade Cape Divert</span>
+</div>
+</div>
+<!-- Control 5: Cyclone Season Toggle -->
+<div class="pt-2 border-t border-outline/30">
+<div class="flex items-center justify-between p-3 bg-on-surface border border-outline">
+<div class="space-y-0.5">
+<div class="text-label-mono-caps font-label-mono-caps text-surface-container-highest flex items-center gap-1.5">
+<span class="text-primary-container">05</span>
+<span>CYCLONE SEASON TOGGLE</span>
+</div>
+<div class="text-xs font-mono text-secondary-fixed-dim">High-seas monsoon velocity warning</div>
+</div>
+<!-- Editorial Neo-Brutalist Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-12 h-6 bg-surface-container-highest peer-focus:outline-none border border-outline rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-on-surface after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-on-surface after:border-outline after:border after:rounded-full after:h-4.5 after:w-4.5 after:transition-all peer-checked:bg-primary-container peer-checked:after:bg-on-surface"></div>
+</label>
+</div>
+<div class="mt-2 flex items-center justify-between px-1">
+<span class="inline-flex items-center gap-1 text-[11px] font-mono text-primary-container font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-ping"></span>
+                ACTIVE — HIGH SEAS RESTRICTION
+              </span>
+<span class="text-[10px] font-mono text-secondary-fixed-dim">Routing +4.2 knot friction</span>
+</div>
+</div>
+</div>
+<!-- Run Simulation Action Button -->
+<div class="pt-4 border-t border-outline/60">
+<button class="w-full py-3.5 px-4 bg-primary-container hover:bg-inverse-primary text-on-surface font-headline-sm font-headline-sm uppercase tracking-wide border-2 border-on-surface shadow-[3px_3px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2" id="run-simulation-btn">
+<span class="material-symbols-outlined font-bold text-lg" data-icon="play_arrow">play_arrow</span>
+<span>RUN MONTE CARLO SIMULATION</span>
+</button>
+<div class="mt-2 text-center text-[11px] font-label-mono-caps text-secondary-fixed-dim">
+            ESTIMATED CONVERGENCE TIME: 38ms (NVIDIA H100 ACCELERATED)
+          </div>
+</div>
+</section>
+<!-- RIGHT SIDE: Split Chart Comparison & Impact Metrics (62% -> lg:col-span-7) -->
+<section class="lg:col-span-7 space-y-6">
+<!-- Large White Chart Card -->
+<div class="relative bg-surface-container-lowest border border-on-surface p-6 shadow-[3px_3px_0px_#0f1115]">
+<!-- Corner Crosses -->
+<div class="corner-cross -top-[5px] -left-[5px]"></div>
+<div class="corner-cross -top-[5px] -right-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -left-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -right-[5px]"></div>
+<!-- Chart Header & Dual Legend -->
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-surface-container-high gap-4">
+<div>
+<div class="text-label-mono-caps font-label-mono-caps text-tertiary">STRESS MODEL DIVERGENCE</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">
+                Projected Freight Index: Base Case vs. Shocked Case
+              </h3>
+</div>
+<!-- Dual Legend -->
+<div class="flex items-center gap-4 bg-surface-container-low px-3 py-1.5 border border-on-surface/20">
+<div class="flex items-center gap-2">
+<span class="inline-block w-4 h-0.5 border-t-2 border-dashed border-on-surface"></span>
+<span class="text-[11px] font-label-mono-caps text-on-surface">Base Case (No Shocks)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-block w-4 h-1 bg-primary-container border border-on-surface"></span>
+<span class="text-[11px] font-label-mono-caps text-on-surface font-bold">Shocked Case (Active)</span>
+</div>
+</div>
+</div>
+<!-- LIVE COMPARISON CHART (replaces static SVG mockup) -->
+<div class="mt-6 relative w-full h-[360px] select-none">
+<canvas id="scenarioChart"></canvas>
+</div>
+<!-- Delta Callout Stat Banner -->
+<div class="bg-primary-container border-2 border-on-surface p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[3px_3px_0px_#0f1115]">
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 bg-on-surface text-primary-container flex items-center justify-center font-headline-sm font-bold text-xl">
+              !
+            </span>
+<div>
+<div class="text-label-mono-caps font-label-mono-caps text-on-primary-fixed-variant">CUMULATIVE EXPOSURE SUMMARY</div>
+<div id="sc-impact-summary" class="text-headline-sm font-headline-sm text-on-surface leading-tight">
+                Adjust the parameters and run the simulation to see projected impact.
+              </div>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<span id="sc-risk-badge" class="px-2.5 py-1 bg-on-surface text-surface-container-lowest font-label-mono-caps text-label-mono-caps">
+              AWAITING SIMULATION
+            </span>
+</div>
+</div>
+</section>
+</div>
+<!-- PRESET SCENARIO MACROS (Horizontal Row Below Chart) -->
+<section class="mt-8 space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-primary font-bold">✦</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface tracking-tight uppercase">
+            PRESET SCENARIO MACROS
+          </h2>
+<span class="text-xs font-label-mono-caps text-tertiary ml-2">(CLICK TO FAST-LOAD MODEL WEIGHTS)</span>
+</div>
+<span class="text-label-mono-caps font-label-mono-caps text-tertiary">3 PRESETS DEFINED</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-desktop">
+<!-- Preset 1: Cyclone Season (ACTIVE) -->
+<div class="relative bg-surface-container-lowest border-2 border-on-surface p-5 shadow-[3px_3px_0px_#0f1115] transition-transform hover:-translate-y-0.5 cursor-pointer" id="preset-cyclone" onclick="loadPreset('cyclone')">
+<div class="corner-cross -top-[5px] -left-[5px]"></div>
+<div class="corner-cross -top-[5px] -right-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -left-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -right-[5px]"></div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xl text-on-surface" data-icon="cyclone">cyclone</span>
+<span class="text-primary text-sm">✦</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Cyclone Season</h3>
+</div>
+<span class="px-2 py-0.5 bg-primary-container text-on-surface font-label-mono-caps text-[10px] border border-on-surface font-bold">
+              Active Preset
+            </span>
+</div>
+<div class="mt-3 text-body-sm font-body-sm text-tertiary">
+            +14d delay on Pacific routes
+          </div>
+<div class="mt-4 pt-3 border-t border-surface-container-high flex items-center justify-between text-[11px] font-label-mono-caps">
+<span class="text-tertiary">IMPACT INDEX</span>
+<span class="font-bold text-on-surface">+32.4% VOLATILITY</span>
+</div>
+</div>
+<!-- Preset 2: Fuel Spike -->
+<div class="relative bg-surface-container-lowest border border-on-surface p-5 hover:border-2 hover:shadow-[3px_3px_0px_#0f1115] transition-all cursor-pointer group">
+<div class="corner-cross -top-[5px] -left-[5px]"></div>
+<div class="corner-cross -top-[5px] -right-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -left-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -right-[5px]"></div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xl text-tertiary group-hover:text-on-surface" data-icon="local_fire_department">local_fire_department</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Fuel Spike</h3>
+</div>
+<button class="px-2 py-0.5 bg-surface-container-high hover:bg-on-surface hover:text-surface-container-lowest text-on-surface font-label-mono-caps text-[10px] border border-on-surface transition-colors" onclick="loadPreset('fuel')">
+              Load Preset
+            </button>
+</div>
+<div class="mt-3 text-body-sm font-body-sm text-tertiary">
+            Crude oil surge +35% / VLSFO peak
+          </div>
+<div class="mt-4 pt-3 border-t border-surface-container-high flex items-center justify-between text-[11px] font-label-mono-caps">
+<span class="text-tertiary">BUNKER INDEX</span>
+<span class="font-bold text-on-surface">+$840 / METRIC TON</span>
+</div>
+</div>
+<!-- Preset 3: Demand Surge -->
+<div class="relative bg-surface-container-lowest border border-on-surface p-5 hover:border-2 hover:shadow-[3px_3px_0px_#0f1115] transition-all cursor-pointer group">
+<div class="corner-cross -top-[5px] -left-[5px]"></div>
+<div class="corner-cross -top-[5px] -right-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -left-[5px]"></div>
+<div class="corner-cross -bottom-[5px] -right-[5px]"></div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xl text-tertiary group-hover:text-on-surface" data-icon="trending_up">trending_up</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Demand Surge</h3>
+</div>
+<button class="px-2 py-0.5 bg-surface-container-high hover:bg-on-surface hover:text-surface-container-lowest text-on-surface font-label-mono-caps text-[10px] border border-on-surface transition-colors" onclick="loadPreset('demand')">
+              Load Preset
+            </button>
+</div>
+<div class="mt-3 text-body-sm font-body-sm text-tertiary">
+            Pre-holiday inventory restocking rush
+          </div>
+<div class="mt-4 pt-3 border-t border-surface-container-high flex items-center justify-between text-[11px] font-label-mono-caps">
+<span class="text-tertiary">TEU UTILIZATION</span>
+<span class="font-bold text-on-surface">98.2% FULL VESSEL</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SUMMARY ACTION RIBBON (Bottom Anchor) -->
+<div class="mt-8 bg-inverse-surface border border-on-surface p-4 flex flex-col md:flex-row items-center justify-between gap-4 text-surface-container-lowest">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container" data-icon="verified">verified</span>
+<span class="text-label-mono-caps font-label-mono-caps tracking-wider text-surface-container-highest">
+          SAVED SIMULATION SCENARIO #849 — EXPORT TO PROCUREMENT TEAM (CSV, PDF, JSON API)
+        </span>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="px-3 py-1.5 bg-surface-container-highest/20 hover:bg-surface-container-highest text-surface-container-lowest hover:text-on-surface border border-outline font-label-mono-caps text-label-mono-caps transition-colors">
+          EXPORT CSV
+        </button>
+<button class="px-3 py-1.5 bg-surface-container-highest/20 hover:bg-surface-container-highest text-surface-container-lowest hover:text-on-surface border border-outline font-label-mono-caps text-label-mono-caps transition-colors">
+          EXPORT PDF
+        </button>
+<button class="px-3 py-1.5 bg-primary-container hover:bg-inverse-primary text-on-surface font-label-mono-caps text-label-mono-caps font-bold border border-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="code">code</span>
+          JSON API HOOK
+        </button>
+</div>
+</div>
+</main>
+<script>
+  const API_BASE = "http://127.0.0.1:8000";
+  let scenarioChart;
+  let debounceTimer;
+
+  function fmtUSD(v) {
+    return "$" + Number(v).toLocaleString("en-US", { maximumFractionDigits: 0 });
+  }
+  function fmtINR(v) {
+    return "₹" + Number(v).toLocaleString("en-IN", { maximumFractionDigits: 0 });
+  }
+
+  function renderScenarioChart(dates, base, shocked) {
+    const ctx = document.getElementById("scenarioChart").getContext("2d");
+    const data = {
+      labels: dates,
+      datasets: [
+        {
+          label: "Base Case (No Shocks)",
+          data: base,
+          borderColor: "#191C1D",
+          borderDash: [6, 4],
+          borderWidth: 2.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.3,
+        },
+        {
+          label: "Shocked Case (Active)",
+          data: shocked,
+          borderColor: "#C4E538",
+          borderWidth: 3,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.3,
+        },
+      ],
+    };
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: "#0f1115" },
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: "#767963", font: { family: "JetBrains Mono", size: 10 }, maxTicksLimit: 8 },
+        },
+        y: {
+          grid: { color: "#e1e3e4", borderDash: [3, 3] },
+          ticks: { color: "#767963", font: { family: "JetBrains Mono", size: 10 } },
+        },
+      },
+    };
+
+    if (scenarioChart) {
+      scenarioChart.data = data;
+      scenarioChart.update();
+    } else {
+      scenarioChart = new Chart(ctx, { type: "line", data, options });
+    }
+  }
+
+  function readSliders() {
+    return {
+      fuel: Number(document.getElementById("sc-fuel-slider").value),
+      delay: Number(document.getElementById("sc-delay-slider").value),
+      demand: Number(document.getElementById("sc-demand-slider").value),
+    };
+  }
+
+  function updateSliderLabels({ fuel, delay, demand }) {
+    document.getElementById("sc-fuel-value").textContent =
+      (fuel >= 0 ? "+" : "") + fuel.toFixed(1) + "%";
+    document.getElementById("sc-delay-value").textContent = delay + " Days";
+    document.getElementById("sc-demand-value").textContent =
+      (demand >= 0 ? "+" : "") + demand.toFixed(1) + "%";
+  }
+
+  async function runSimulation() {
+    const { fuel, delay, demand } = readSliders();
+    updateSliderLabels({ fuel, delay, demand });
+
+    const res = await fetch(`${API_BASE}/api/scenario?horizon_days=90`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fuel_pct_change: fuel,
+        delay_days: delay,
+        demand_shock_pct: demand,
+      }),
+    });
+    const data = await res.json();
+
+    renderScenarioChart(
+      data.base_forecast.dates,
+      data.base_forecast.forecast,
+      data.scenario_forecast.forecast
+    );
+
+    const savings = data.savings;
+    const rec = data.recommendation;
+    const impactPositive = savings.savings_usd >= 0;
+
+    document.getElementById("sc-impact-summary").textContent = impactPositive
+      ? `Model Strategy (${rec.charter_type} — ${rec.timing}) saves an estimated ${fmtINR(savings.savings_inr)} (${savings.savings_pct}%) vs. naive baseline under this scenario.`
+      : `This scenario erodes ${fmtINR(Math.abs(savings.savings_inr))} of value vs. naive baseline — consider adjusting charter timing.`;
+
+    const riskBadge = document.getElementById("sc-risk-badge");
+    if (rec.disruption_score > 0.5 || Math.abs(fuel) > 25 || delay > 10) {
+      riskBadge.textContent = "HIGH RISK TOLERANCE EXCEEDED";
+      riskBadge.className = "px-2.5 py-1 bg-[#ba1a1a] text-surface-container-lowest font-label-mono-caps text-label-mono-caps";
+    } else {
+      riskBadge.textContent = "WITHIN NORMAL RISK BAND";
+      riskBadge.className = "px-2.5 py-1 bg-on-surface text-surface-container-lowest font-label-mono-caps text-label-mono-caps";
+    }
+  }
+
+  function onSliderInput() {
+    updateSliderLabels(readSliders());
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(runSimulation, 300);
+  }
+
+  function loadPreset(name) {
+    const presets = {
+      cyclone: { fuel: 5, delay: 14, demand: -8 },
+      fuel: { fuel: 35, delay: 2, demand: 0 },
+      demand: { fuel: 5, delay: 0, demand: 20 },
+    };
+    const p = presets[name];
+    if (!p) return;
+    document.getElementById("sc-fuel-slider").value = p.fuel;
+    document.getElementById("sc-delay-slider").value = p.delay;
+    document.getElementById("sc-demand-slider").value = p.demand;
+    updateSliderLabels(p);
+    runSimulation();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const resetButton = document.getElementById('reset-params');
+    if (resetButton) {
+      resetButton.addEventListener('click', () => {
+        document.getElementById("sc-fuel-slider").value = 0;
+        document.getElementById("sc-delay-slider").value = 0;
+        document.getElementById("sc-demand-slider").value = 0;
+        updateSliderLabels({ fuel: 0, delay: 0, demand: 0 });
+        runSimulation();
+      });
+    }
+
+    document.getElementById("sc-fuel-slider").addEventListener("input", onSliderInput);
+    document.getElementById("sc-delay-slider").addEventListener("input", onSliderInput);
+    document.getElementById("sc-demand-slider").addEventListener("input", onSliderInput);
+    document.getElementById("run-simulation-btn").addEventListener("click", runSimulation);
+
+    runSimulation();
+  });
+</script>
+</body></html>
